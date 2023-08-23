@@ -1,0 +1,19 @@
+{
+  "ExecutionTimes" : [
+    "21:15",
+    "7:56",
+    "22:1"
+  ],
+  "MaxDelta": 10,
+  "ExcludedWeekDays": [7],
+  "ExcludedYearDays": [
+    "12-27",
+    "1-30",
+    "3-2"
+  ],
+  "Actions" :[
+    {"one":"1", "two":"2"},
+    {"car":"fiat", "dog":"fido", "cat":"black"}
+  ],
+  "Parallel": false
+}

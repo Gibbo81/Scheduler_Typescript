@@ -1,0 +1,7 @@
+{
+  "CyclingTime" : 301,
+  "Actions" :[
+    {"car":"fiat", "dog":"fido", "cat":"black"}
+  ],
+  "Parallel": true
+}

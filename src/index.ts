@@ -1,18 +1,14 @@
+import { read } from "fs"
 import { CyclingConfiguratrion } from "./service/dto/CyclingConfiguratrion"
+import { ReadConfiguration } from "./service/ReadConfigurations"
 
-console.log(`hello me!`)
 
-var data = `
-{
-  "CyclingTime" : 20,
-  "Actions" :[
-    {"one":"1", "two":"2"},
-    {"car":"fiat", "dog":"fido", "cat":"black"}
-  ],
-  "Parallel": false
-}`
-
-   var dto = JSON.parse(data) as CyclingConfiguratrion
+var reader = new ReadConfiguration('C:/Repo/Scheduler_Typescript/ActionsConfiguration/Fixed/', 
+                                   'C:/Repo/Scheduler_Typescript/ActionsConfiguration/Cyclic/')
+var result = reader.load()
+                   .then(x => {
+                        console.log(`data : ${JSON.stringify(x)}`)     
+                   })
 
    var y=34
    y = y+69
