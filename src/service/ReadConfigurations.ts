@@ -13,36 +13,26 @@ export class ReadConfiguration{
     }
 
     private async readCyclic() {
-        var cyclicConfigurationsfiles = await this.searchFiles(this.cycleFolder);
+        var cyclicConfigurationsfiles = await this.searchJsonFiles(this.cycleFolder);
         var cyclicDtos: CyclingConfiguratrion[] = [];
         for (const file of cyclicConfigurationsfiles) {
             var content = await fs.readFile(file, 'utf8')
             cyclicDtos.push(JSON.parse(content) as CyclingConfiguratrion)
         }
-
-        // cyclicConfigurationsfiles.forEach(async c => {
-        //     var content = await fs.readFile(c, 'utf8')
-        //     cyclicDtos.push(JSON.parse(content) as CyclingConfiguratrion)
-        // });
         return cyclicDtos;
     }
 
     private async readFixed() {
-        var fixedConfigurationsfiles = await this.searchFiles(this.fixedFolder);
+        var fixedConfigurationsfiles = await this.searchJsonFiles(this.fixedFolder);
         var fixedDtos: FixedConfiguratrion[] = [];
         for (const file of fixedConfigurationsfiles) {
             var content = await fs.readFile(file, 'utf8')
             fixedDtos.push(JSON.parse(content) as FixedConfiguratrion)
         }
-        
-        // await fixedConfigurationsfiles.forEach(async c => {
-        //     var content = await fs.readFile(c, 'utf8')
-        //     fixedDtos.push(JSON.parse(c) as FixedConfiguratrion)
-        // });
         return fixedDtos;
     }
 
-    private async searchFiles(folder: string): Promise<string[]> {
+    private async searchJsonFiles(folder: string): Promise<string[]> {
         var files = await fs.readdir(folder)
         return files.filter(this.isFileJson).map(fileName => folder + fileName)
     }

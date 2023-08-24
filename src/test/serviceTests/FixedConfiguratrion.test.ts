@@ -4,6 +4,7 @@ import { FixedConfiguratrion } from "../../service/dto/FixedConfiguratrion";
 test('Fixed Configuration is correctly deserialized', () =>{
   var data = `
 {
+  "OperationName" : "pippus",
   "ExecutionTimes" : [
     "21:15",
     "7:56",
@@ -25,6 +26,7 @@ test('Fixed Configuration is correctly deserialized', () =>{
 
    var dto = JSON.parse(data) as FixedConfiguratrion
 
+   expect(dto.OperationName).toBe('pippus')
    expect(dto.MaxDelta).toBe(10)
    expect(dto.ExecutionTimes.length).toBe(3)
    expect(dto.ExecutionTimes[0]).toBe("21:15")

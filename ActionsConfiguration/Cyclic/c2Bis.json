@@ -1,4 +1,5 @@
 {
+  "OperationName" : "Qui-qua",
   "CyclingTime" : 301,
   "Actions" :[
     {"car":"fiat", "dog":"fido", "cat":"black"}

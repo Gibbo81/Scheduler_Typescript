@@ -1,4 +1,5 @@
 {
+  "OperationName" : "plutus",
   "CyclingTime" : 20,
   "Actions" :[
     {"one":"1", "two":"2"},

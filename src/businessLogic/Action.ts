@@ -1,3 +1,3 @@
 export interface Action{
-  execute(): Promise<{[key:string]:string}>
+    execute(): Promise<{[key:string]:string}>
 }

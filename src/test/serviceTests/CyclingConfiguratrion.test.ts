@@ -5,6 +5,7 @@ import { CyclingConfiguratrion } from "../../service/dto/CyclingConfiguratrion";
 test('Cycling Configuration is correctly deserialized', () =>{
   var data = `
 {
+  "OperationName" : "plutus",
   "CyclingTime" : 20,
   "Actions" :[
     {"one":"1", "two":"2"},
@@ -15,6 +16,7 @@ test('Cycling Configuration is correctly deserialized', () =>{
 
    var dto = JSON.parse(data) as CyclingConfiguratrion
 
+   expect(dto.OperationName).toBe('plutus')
    expect(dto.CyclingTime).toBe(20)
    expect(dto.Parallel).toBe(false)
    expect(dto.Actions.length).toBe(2)
