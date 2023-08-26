@@ -1,5 +1,5 @@
 import { Action } from "./Action";
-import { IsToExecute } from "./plugIn/IsToExecute";
+import { IsToExecute } from "../IsToExecute";
 
 //TODO: working on this action
 

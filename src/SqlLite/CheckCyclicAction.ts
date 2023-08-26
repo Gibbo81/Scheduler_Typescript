@@ -1,6 +1,6 @@
-import { IsToExecute } from "../businessLogic/plugIn/IsToExecute";
+import { IsToExecute } from "../businessLogic/IsToExecute";
 
-export class CheckCyclicAction implements IsToExecute{//IsToExecute is business logic remove from DB, hew only the queries
+export class CheckCyclicAction {//IsToExecute is business logic remove from DB, hew only the queries
     private readonly readCommand : string = 
 `SELECT Name
 FROM OperationLastExecution
