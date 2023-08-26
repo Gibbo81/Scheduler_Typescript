@@ -1,8 +1,9 @@
-import { IsToExecute } from "./IsToExecute";
+import { OperationStatus } from "./plugIn/OperationStatus";
+
 
 //TODO: working on this action
 export class CyclicOperation{
-    constructor(private checker : IsToExecute ){}
+    constructor(private cyclicTime : number,  private reader: OperationStatus){}
 
     
 }

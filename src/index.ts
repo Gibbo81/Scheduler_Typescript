@@ -9,8 +9,10 @@ var sqllite='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 
 // var x = new CheckCyclicAction("pippo", 20, sqllite,1)
 // x.check().then(x => console.log(`result is: ${x}`))
-var y = new CheckCyclicAction("pluto non c'è", 20, sqllite, 1)
-y.check().then(x => console.log(`result is: ${x}`))
+var y = new CheckCyclicAction(sqllite, 1)
+y.read("pluto non c'è").then(x => {
+    console.log(`result is: ${x?.check(10)}`)}
+    )
 
 
 console.log(100)

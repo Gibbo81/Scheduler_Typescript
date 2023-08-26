@@ -1,4 +1,4 @@
 export interface IsToExecute{
-    check() : Promise<boolean>
+    check(interval: number) : boolean
     complete() : Promise<void>
 }
