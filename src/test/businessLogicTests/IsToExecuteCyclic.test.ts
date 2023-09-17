@@ -40,4 +40,7 @@ class mockCloseOperation implements CloseOperation{
     close(operationName: string): Promise<void> {
         return new Promise((resolve, reject) => {resolve()})
     }
+    Start(operationName: string, date: Date, schedulerId: number): Promise<void> {
+        return new Promise((resolve, reject) => {resolve()})
+    }
 }

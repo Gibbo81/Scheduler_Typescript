@@ -1,4 +1,5 @@
 export interface IsToExecute{
     check(interval: number) : boolean
-    complete() : Promise<void>
+    complete(ownerId: string) : Promise<void>
+    start(ownerId: string): Promise<void>
 }
