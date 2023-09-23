@@ -2,6 +2,7 @@ import { read } from "fs"
 import { CyclingConfiguratrion } from "./service/dto/CyclingConfiguratrion"
 import { ReadConfiguration } from "./service/ReadConfigurations"
 import { CheckCyclicAction } from "./SqlLite/CheckCyclicAction"
+import { CyclicOperationFactory } from "./businessLogic/Operations/CyclicOperationFactory"
 
 var sqllite='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 
@@ -29,10 +30,11 @@ function readStatusPluto() {
     return y
 }
 
-   function ReadConfigurationToDTO() {
+function ReadConfigurationToDTO() {
     var reader = new ReadConfiguration('C:/Repo/Scheduler_Typescript/ActionsConfiguration/Fixed/',
-        'C:/Repo/Scheduler_Typescript/ActionsConfiguration/Cyclic/')
-    var result = reader.load()
+                                       'C:/Repo/Scheduler_Typescript/ActionsConfiguration/Cyclic/',
+                                       new CyclicOperationFactory(sqllite, 34))
+    reader.load()
         .then(x => {
             console.log(`data : ${JSON.stringify(x)}`)
         })

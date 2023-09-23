@@ -2,27 +2,30 @@ import fs from "fs/promises";
 import { AllConfiguration } from "./dto/AllConfigurations";
 import { FixedConfiguratrion } from "./dto/FixedConfiguratrion";
 import { CyclingConfiguratrion } from "./dto/CyclingConfiguratrion";
+import { CyclicOperation } from "../businessLogic/Operations/CyclicOperation";
+import { CyclicOperationFactory } from "../businessLogic/Operations/CyclicOperationFactory";
 
 export class ReadConfiguration{
-    constructor (private fixedFolder: string, private cycleFolder:string) {}
+    constructor (private fixedFolder: string, private cycleFolder:string, private factory: CyclicOperationFactory) {}
 
     public async load(): Promise<AllConfiguration>{
-        var fixedDtos: FixedConfiguratrion[] = await this.readFixed();
-        var cyclicDtos: CyclingConfiguratrion[] = await this.readCyclic();
-        return new AllConfiguration(cyclicDtos, fixedDtos)
+        var fixedDtos = await this.readFixed(); //TODO: do not return a DTO but a class BL
+        var cyclicDtos = await this.readCyclic();
+        return new AllConfiguration(cyclicDtos, fixedDtos) 
     }
 
-    private async readCyclic() {
+    private async readCyclic() : Promise<CyclicOperation[]> {
         var cyclicConfigurationsfiles = await this.searchJsonFiles(this.cycleFolder);
-        var cyclicDtos: CyclingConfiguratrion[] = [];
+        var cyclicDtos: CyclicOperation[] = [];
         for (const file of cyclicConfigurationsfiles) {
             var content = await fs.readFile(file, 'utf8')
-            cyclicDtos.push(JSON.parse(content) as CyclingConfiguratrion)
+            var dto = JSON.parse(content) as CyclingConfiguratrion
+            cyclicDtos.push(this.factory.build(dto))
         }
         return cyclicDtos;
     }
 
-    private async readFixed() {
+    private async readFixed()  : Promise<FixedConfiguratrion[]>{
         var fixedConfigurationsfiles = await this.searchJsonFiles(this.fixedFolder);
         var fixedDtos: FixedConfiguratrion[] = [];
         for (const file of fixedConfigurationsfiles) {

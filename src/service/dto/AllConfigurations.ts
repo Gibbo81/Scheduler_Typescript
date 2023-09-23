@@ -1,6 +1,6 @@
-import { CyclingConfiguratrion } from "./CyclingConfiguratrion";
+import { CyclicOperation } from "../../businessLogic/Operations/CyclicOperation";
 import { FixedConfiguratrion } from "./FixedConfiguratrion";
 
 export class AllConfiguration{
-  constructor(public cyclic : CyclingConfiguratrion[], public fixed : FixedConfiguratrion[] ){}
+  constructor(public cyclic : CyclicOperation[], public fixed : FixedConfiguratrion[] ){}
 }

@@ -15,7 +15,6 @@ private readonly insertCommand : string =
 	ExecutionStarted,
 	SchedulerInCharge)
 VALUES ($name, $lastExecution, 1, $executionStarted, $scheduler)` 
-
 private readonly startCommand : string = 
 `UPDATE OperationLastExecution
 SET InExecution = 1, ExecutionStarted = $startingTime, SchedulerInCharge = $scheduler
@@ -66,7 +65,6 @@ WHERE Name= $name`
         })
     }
     
-
     private OpenConnection() {
         const sqlite3 = require('sqlite3').verbose()
         return new sqlite3.Database(this.db)
