@@ -1,8 +1,9 @@
-import { IsToExecuteCyclic } from "../businessLogic/IsToExecuteCyclic";
-import { CloseOperation } from "../businessLogic/plugIn/CloseOperation";
+import { IsToExecute } from "../businessLogic/IsToExecute";
+import { IsToExecuteCyclic, IsToExecuteFirstTime } from "../businessLogic/IsToExecuteCyclic";
+import { CloseStartOperation } from "../businessLogic/plugIn/CloseOperation";
 import { OperationStatus } from "../businessLogic/plugIn/OperationStatus";
 
-export class CheckCyclicAction implements OperationStatus, CloseOperation {
+export class CheckCyclicAction implements OperationStatus, CloseStartOperation {
     private readonly readCommand : string = 
 `SELECT *
 FROM OperationLastExecution
@@ -21,7 +22,7 @@ SET InExecution = 1, ExecutionStarted = $startingTime, SchedulerInCharge = $sche
 WHERE Name= $name` 
         
     constructor(private db: string, private schedureId: number){}
-
+    
     Start(operationName: string, date: Date, schedulerId: number): Promise<void> {
         var db = this.OpenConnection()
         return new Promise((resolve, reject) => {
@@ -40,12 +41,8 @@ WHERE Name= $name`
                         })
             })        
     }
-    
-    close(operationName: string): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
 
-    read(name: string): Promise<IsToExecuteCyclic | undefined> {
+    read(name: string): Promise<IsToExecute> {
         var db = this.OpenConnection()
         return new Promise((resolve, reject) => {
             db.all(this.readCommand, { $name: name}, (err:any, rows:{ [key: string]: string|number; }[]) => {                
@@ -55,16 +52,24 @@ WHERE Name= $name`
                 } 
                 else if (rows.length===0) {
                     db.close()
-                    resolve(undefined)                                    
+                    resolve(new IsToExecuteFirstTime(name, this.schedureId, this))                                    
                 }
                 else {
                     db.close()
-                    resolve( new IsToExecuteCyclic(name, new Date(rows[0].LastExecution), rows[0].InExecution===1,  this))
+                    resolve( new IsToExecuteCyclic(name, new Date(rows[0].LastExecution), rows[0].InExecution===1, this.schedureId, this))
                 }
             })
         })
     }
     
+    close(operationName: string): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    Create(operationName: string, date: Date, schedulerId: number): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
     private OpenConnection() {
         const sqlite3 = require('sqlite3').verbose()
         return new sqlite3.Database(this.db)

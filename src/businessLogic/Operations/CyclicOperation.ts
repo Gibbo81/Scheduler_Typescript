@@ -3,7 +3,6 @@ import { OperationStatus } from "../plugIn/OperationStatus";
 import { IOperation } from "./IOperation";
 import { IsToExecute } from "../IsToExecute";
 
-//TODO: working on this action
 export class CyclicOperation implements IOperation{
     constructor(private cyclicTime : number,  
                 private name : string,
@@ -12,23 +11,17 @@ export class CyclicOperation implements IOperation{
                 private actions: Action[]){}
     
     async CheckAndExecute(): Promise<boolean> {        
-        var status = await this.status.read(this.name);
-        if (this.IsNeverExecutedBefore(status)) //TODO: bug red - test create new action before sytarting it
-            return await this.ExecuteActions(status)                     
-        if (status.check(this.cyclicTime))
-            return await this.ExecuteActions(status)
+        var currentStatus = await this.status.read(this.name);               
+        if (currentStatus.check(this.cyclicTime))
+            return await this.ExecuteActions(currentStatus)
         return false
     }
 
-    private async ExecuteActions(status: IsToExecute) : Promise<boolean>{
-        await status.start(this.ownerId.toString())
+    private async ExecuteActions(currentStatus: IsToExecute) : Promise<boolean>{
+        await currentStatus.start()
         for (const x of this.actions)
             await x.execute()
-        await status.complete(this.ownerId.toString())
+        await currentStatus.complete()
         return true;
-    }
-
-    private IsNeverExecutedBefore(x: IsToExecute | undefined) : boolean{
-        return x === undefined;
     }
 }

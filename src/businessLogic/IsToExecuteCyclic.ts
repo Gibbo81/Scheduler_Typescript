@@ -1,12 +1,23 @@
 import { IsToExecute } from "./IsToExecute";
-import { CloseOperation } from "./plugIn/CloseOperation";
+import { CloseStartOperation } from "./plugIn/CloseOperation";
 
+abstract class OnlyClose{
+    constructor (protected name: string, 
+                 protected operation : CloseStartOperation){}
 
-export class IsToExecuteCyclic implements IsToExecute{
-    constructor (private name: string, 
+    async complete(): Promise<void> {
+        await this.operation.close(this.name);
+    }
+}
+
+export class IsToExecuteCyclic extends OnlyClose implements IsToExecute{
+    constructor (name: string, 
                  private lastExecution: Date, 
                  private inExecution : boolean, 
-                 private status : CloseOperation){}
+                 private schedulerId : number, 
+                 operation : CloseStartOperation){
+                    super(name, operation)
+                 }
     
     check(interval: number): boolean {
         var nextExecutionTime = new Date(this.lastExecution.getTime() + interval*60000)
@@ -15,12 +26,21 @@ export class IsToExecuteCyclic implements IsToExecute{
         return false
     }
 
-    start(ownerId: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async start(): Promise<void> {
+        await this.operation.Start(this.name, new Date(), this.schedulerId );
     }
+}
 
-    complete(ownerId: string): Promise<void> {
-        throw new Error("Method not implemented.");
+export class IsToExecuteFirstTime extends OnlyClose  implements IsToExecute{
+    constructor (name: string, 
+                 private schedulerId : number, 
+                 operation : CloseStartOperation){
+                    super(name, operation)
+                 }
+    
+    check(interval: number): boolean {return true}
+
+    async start(): Promise<void> {
+        await this.operation.Create(this.name, new Date(), this.schedulerId);
     }
-
 }

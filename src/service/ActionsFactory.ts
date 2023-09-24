@@ -1,4 +1,4 @@
-//TODO: 
+//TODO: implement the factory
 
 import { Action } from "../businessLogic/Actions/Action";
 import { AllConfiguration } from "./dto/AllConfigurations";
