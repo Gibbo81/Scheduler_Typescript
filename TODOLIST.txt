@@ -1,1 +1,7 @@
+Main argument:
+  --CyclicOperation 
+  --DeleteFileAction *** (Delete all the files matching a pattern from a folder) maybe unit tests
+
+
+
 -- Factory tests

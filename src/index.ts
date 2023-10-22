@@ -3,16 +3,14 @@ import { CyclingConfiguratrion } from "./service/dto/CyclingConfiguratrion"
 import { ReadConfiguration } from "./service/ReadConfigurations"
 import { CheckCyclicAction } from "./SqlLite/CheckCyclicAction"
 import { CyclicOperationFactory } from "./businessLogic/Operations/CyclicOperationFactory"
+import { DeleteFileAction } from "./businessLogic/Actions/FileAction"
 
 var sqllite='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 
 //ReadConfigurationToDTO()
-
-
 //StartPluto()
-
-var y = readStatusPluto()
-
+//var y = readStatusPluto()
+DeleteFileActionTestsManual(undefined)
 
 console.log(100)
 
@@ -28,6 +26,11 @@ function readStatusPluto() {
         console.log(`result is: ${x?.check(10)}`)
     })
     return y
+}
+
+function  DeleteFileActionTestsManual(filter: string ){
+    var a = new DeleteFileAction('C:/pppp/', filter)
+    a.execute().then(x => console.log(`result : ${JSON.stringify(x)}`))
 }
 
 function ReadConfigurationToDTO() {

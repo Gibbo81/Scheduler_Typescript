@@ -6,7 +6,7 @@ import { CyclicOperation } from "../businessLogic/Operations/CyclicOperation";
 import { CyclicOperationFactory } from "../businessLogic/Operations/CyclicOperationFactory";
 
 export class ReadConfiguration{
-    constructor (private fixedFolder: string, private cycleFolder:string, private factory: CyclicOperationFactory) {}
+    constructor (private fixedFolder: string, private cycleFolder:string, private factoryC: CyclicOperationFactory) {}
 
     public async load(): Promise<AllConfiguration>{
         var fixedDtos = await this.readFixed(); //TODO: do not return a DTO but a class BL
@@ -20,7 +20,7 @@ export class ReadConfiguration{
         for (const file of cyclicConfigurationsfiles) {
             var content = await fs.readFile(file, 'utf8')
             var dto = JSON.parse(content) as CyclingConfiguratrion
-            cyclicDtos.push(this.factory.build(dto))
+            cyclicDtos.push(this.factoryC.build(dto))
         }
         return cyclicDtos;
     }
