@@ -1,4 +1,4 @@
-import { DeleteFileAction } from "../../../businessLogic/Actions/FileAction"
+import { DeleteFileAction } from "../../../businessLogic/Actions/DeleteFileAction"
 
 test('No files are present therefore no files are deleted', async () =>{        
     var action = new DeleteFileActionWrapper("", "", [])

@@ -3,7 +3,7 @@ import { IsToExecuteCyclic, IsToExecuteFirstTime } from "../businessLogic/IsToEx
 import { CloseStartOperation } from "../businessLogic/plugIn/CloseOperation";
 import { OperationStatus } from "../businessLogic/plugIn/OperationStatus";
 
-export class CheckCyclicAction implements OperationStatus, CloseStartOperation {
+export class CheckCyclicOperation implements OperationStatus, CloseStartOperation {
     private readonly readCommand : string = 
 `SELECT *
 FROM OperationLastExecution

@@ -1,4 +1,4 @@
-import { CheckCyclicAction } from "../../SqlLite/CheckCyclicAction";
+import { CheckCyclicOperation } from "../../SqlLite/CheckCyclicOperation";
 import { CyclingConfiguratrion } from "../../service/dto/CyclingConfiguratrion";
 import { CyclicOperation } from "./CyclicOperation";
 
@@ -12,7 +12,7 @@ export class CyclicOperationFactory {
         return new CyclicOperation(configuration.CyclingTime, 
                                    configuration.OperationName,
                                    this.schedureId,
-                                   new CheckCyclicAction(this.db, this.schedureId), 
+                                   new CheckCyclicOperation(this.db, this.schedureId), 
                                    []); //TODO: missing actions factory
     }
 }

@@ -1,7 +1,7 @@
 Main argument:
   --CyclicOperation 
-  --DeleteFileAction *** (Delete all the files matching a pattern from a folder) 
+  --DeleteFileAction *** (Delete all the files matching a pattern from a folder)  -- Check for subfolder, are they deleted?
 
 
 
--- Factory tests
+-- Factory tests -- done when creating each single action
