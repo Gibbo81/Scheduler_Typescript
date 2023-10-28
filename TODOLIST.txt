@@ -5,3 +5,5 @@ Main argument:
 
 
 -- Factory tests -- done when creating each single action
+-- CyclicOperation tests possible with a json serializer?
+-- CyclicOperation tests possible with a json serializer?
