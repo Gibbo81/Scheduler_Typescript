@@ -18,7 +18,8 @@ export class DeleteFileAction implements Action{
     }
 
     protected async readAllfiles(): Promise<string[]> {
-        return await fs.readdir(this.folder);
+        var list = await fs.readdir(this.folder, { withFileTypes: true })
+        return list.filter(dirent => dirent.isFile()).map(dirent => dirent.name)
     }
 
     private applyFilter(files: string[]) {
