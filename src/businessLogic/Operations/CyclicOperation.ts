@@ -18,10 +18,16 @@ export class CyclicOperation implements IOperation{
     }
 
     private async ExecuteActions(currentStatus: IsToExecute) : Promise<boolean>{
-        await currentStatus.start()
-        for (const x of this.actions)
-            await x.execute()
+        var isTakenInChargeByThisInstance = await currentStatus.start()
+        if (!isTakenInChargeByThisInstance)
+            return false;
+        await this.executeActions();
         await currentStatus.complete()
         return true;
+    }
+
+    private async executeActions() {
+        for (const x of this.actions)
+            await x.execute();
     }
 }

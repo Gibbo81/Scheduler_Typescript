@@ -26,8 +26,8 @@ export class IsToExecuteCyclic extends OnlyClose implements IsToExecute{
         return false
     }
 
-    async start(): Promise<void> {
-        await this.operation.Start(this.name, new Date(), this.schedulerId );
+    async start(): Promise<boolean> {
+        return await this.operation.start(this.name, new Date(), this.schedulerId );
     }
 }
 
@@ -40,7 +40,8 @@ export class IsToExecuteFirstTime extends OnlyClose  implements IsToExecute{
     
     check(interval: number): boolean {return true}
 
-    async start(): Promise<void> {
-        await this.operation.Create(this.name, new Date(), this.schedulerId);
+    async start(): Promise<boolean> {
+        await this.operation.Create(this.name, new Date(), this.schedulerId)
+        return true
     }
 }

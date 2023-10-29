@@ -19,28 +19,29 @@ VALUES ($name, $lastExecution, 1, $executionStarted, $scheduler)`
 private readonly startCommand : string = 
 `UPDATE OperationLastExecution
 SET InExecution = 1, ExecutionStarted = $startingTime, SchedulerInCharge = $scheduler
-WHERE Name= $name` 
+WHERE Name= $name and InExecution = 0` 
         
     constructor(private db: string, private schedureId: number){}
     
-    Start(operationName: string, date: Date, schedulerId: number): Promise<void> {
-        var db = this.OpenConnection()
-        return new Promise((resolve, reject) => {
-            db.all(this.startCommand, 
+    start(operationName: string, date: Date, schedulerId: number): Promise<boolean> {
+        var db = this.OpenConnection()       
+          return new Promise((resolve, reject) => {
+            db.run(this.startCommand, 
                    { $name: operationName, $startingTime : date.toString(), $scheduler : schedulerId}, 
-                   (err:any) => {                
-         
-                            if (err) {      
-                                db.close()
-                                reject(err)
-                            } 
-                            else {
-                                db.close()
-                                resolve(undefined)
-                            }
-                        })
-            })        
-    }
+                   function(err) {
+                        if (err) {      
+                            db.close()
+                            reject(err)
+                        } 
+                        else {
+                            db.close()
+                            var result = (this.changes>0) 
+                            resolve(result)
+                        }
+                   }
+            )}   
+        )
+    }    
 
     read(name: string): Promise<IsToExecute> {
         var db = this.OpenConnection()

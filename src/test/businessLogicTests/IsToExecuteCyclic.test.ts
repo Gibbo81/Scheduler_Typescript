@@ -67,8 +67,8 @@ export class mockCloseOperation implements CloseStartOperation{
         this.closed= true
         return new Promise((resolve, reject) => {resolve()})
     }
-    Start(operationName: string, date: Date, schedulerId: number): Promise<void> {
+    start(operationName: string, date: Date, schedulerId: number): Promise<boolean> {
         this.started = true
-        return new Promise((resolve, reject) => {resolve()})
+        return new Promise((resolve, reject) => {resolve(true)})
     }
 }

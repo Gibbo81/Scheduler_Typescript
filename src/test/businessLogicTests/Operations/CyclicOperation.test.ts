@@ -4,8 +4,8 @@ import { IsToExecute } from "../../../businessLogic/IsToExecute";
 import { Action } from "../../../businessLogic/Actions/Action";
 
 
-test('Must execute the operation, executes its actions and return true', async ()=> {
-    var status = new IsToExecuteMock(true)
+test('Must execute the operation, executes its actions and returns true', async ()=> {
+    var status = new IsToExecuteMock(true, true)
     var statusReaderMock = new OperationStatusMock(status)    
     var actions :ActionMock[] = []
     actions.push(new ActionMock())
@@ -25,8 +25,30 @@ test('Must execute the operation, executes its actions and return true', async (
     expect(statusReaderMock.name).toBe(operationName)
 })
 
-test('Must NOT execute the operation, do not executes its actions and return false', async ()=> {
-    var status = new IsToExecuteMock(false)
+test("Must execute the operation but another instance takes charge of it instead, doesn't execute its actions and returns false", async ()=> {
+    var operationNotForMe = false
+    var status = new IsToExecuteMock(true, operationNotForMe)
+    var statusReaderMock = new OperationStatusMock(status)    
+    var actions :ActionMock[] = []
+    actions.push(new ActionMock())
+    actions.push(new ActionMock())
+    var cycliTime =10
+    var operationName ="Pippus"
+    var operation = new CyclicOperation(cycliTime, operationName, 777, statusReaderMock, actions)
+
+    var result = await operation.CheckAndExecute();
+
+    expect(result).toBeFalsy()
+    expect(actions[0].executed).toBeFalsy()
+    expect(actions[1].executed).toBeFalsy()
+    expect(status.interval).toBe(cycliTime)
+    expect(status.completed).toBeFalsy()
+    expect(status.started).toBeTruthy()
+    expect(statusReaderMock.name).toBe(operationName)
+})
+
+test('Must NOT execute the operation, does not executes it actions and returns false', async ()=> {
+    var status = new IsToExecuteMock(false, true)
     var statusReaderMock = new OperationStatusMock(status)    
     var actions :ActionMock[] = []
     actions.push(new ActionMock())
@@ -66,9 +88,8 @@ class OperationStatusMock implements OperationStatus{
     }
 }
 
-class IsToExecuteMock implements IsToExecute{
-    
-    constructor(private checkResult: boolean){}
+class IsToExecuteMock implements IsToExecute{    
+    constructor(private checkResult: boolean, private wasAbleToTakeChargeOfTheOperation: boolean){}
     public interval : number|undefined= undefined
     public completed : boolean|undefined= undefined
     public started : boolean|undefined= undefined
@@ -81,8 +102,8 @@ class IsToExecuteMock implements IsToExecute{
         this.completed = true
         return Promise.resolve()
     }
-    start(): Promise<void> {
+    start(): Promise<boolean> {
         this.started = true
-        return Promise.resolve()
+        return Promise.resolve(this.wasAbleToTakeChargeOfTheOperation)
     }
 }
