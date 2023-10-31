@@ -59,7 +59,7 @@ export class mockCloseOperation implements CloseStartOperation{
     started : boolean= false    
     created : boolean= false    
 
-    Create(operationName: string, date: Date, schedulerId: number): Promise<void> {
+    create(operationName: string, date: Date, schedulerId: number): Promise<void> {
         this.created= true
         return new Promise((resolve, reject) => {resolve()})
     }

@@ -6,7 +6,7 @@ abstract class OnlyClose{
                  protected operation : CloseStartOperation){}
 
     async complete(): Promise<void> {
-        await this.operation.close(this.name);
+        await this.operation.close(this.name, new Date());
     }
 }
 
@@ -41,7 +41,7 @@ export class IsToExecuteFirstTime extends OnlyClose  implements IsToExecute{
     check(interval: number): boolean {return true}
 
     async start(): Promise<boolean> {
-        await this.operation.Create(this.name, new Date(), this.schedulerId)
+        await this.operation.create(this.name, new Date(), this.schedulerId)
         return true
     }
 }

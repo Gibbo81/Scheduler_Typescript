@@ -11,15 +11,18 @@ WHERE Name= $name`
 private readonly insertCommand : string = 
 `INSERT INTO OperationLastExecution(
 	Name,
-	LastExecution,
 	InExecution,
 	ExecutionStarted,
 	SchedulerInCharge)
-VALUES ($name, $lastExecution, 1, $executionStarted, $scheduler)` 
+VALUES ($name, 1, $executionStarted, $scheduler)` 
 private readonly startCommand : string = 
 `UPDATE OperationLastExecution
 SET InExecution = 1, ExecutionStarted = $startingTime, SchedulerInCharge = $scheduler
 WHERE Name= $name and InExecution = 0` 
+private readonly completeCommand : string = 
+`UPDATE OperationLastExecution
+SET InExecution = 0, LastExecution = $endingTime, SchedulerInCharge = NULL
+WHERE Name= $name` 
         
     constructor(private db: string, private schedureId: number){}
     
@@ -63,39 +66,44 @@ WHERE Name= $name and InExecution = 0`
         })
     }
     
-    close(operationName: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    close(operationName: string, date: Date): Promise<void> {
+        var db = this.OpenConnection()
+        return new Promise((resolve, reject) => {
+            db.run(this.completeCommand, 
+                   { $name: operationName, $endingTime : date.toString()}, 
+                   function(err) {
+                    if (err) {      
+                        db.close()
+                        reject(err)
+                    } 
+                    else {
+                        db.close()
+                        resolve()
+                    }
+               })
+        })
     }
 
-    Create(operationName: string, date: Date, schedulerId: number): Promise<void> {
-        throw new Error("Method not implemented.");
+    create(operationName: string, date: Date, schedulerId: number): Promise<void> {
+        var db = this.OpenConnection()
+        return new Promise((resolve, reject) => {
+            db.run(this.insertCommand, 
+                   { $name: operationName, $executionStarted : date.toString(), $scheduler : schedulerId}, 
+                   function(err) {
+                    if (err) {      
+                        db.close()
+                        reject(err)
+                    } 
+                    else {
+                        db.close()
+                        resolve()
+                    }
+               })
+        })
     }
 
     private OpenConnection() {
         const sqlite3 = require('sqlite3').verbose()
         return new sqlite3.Database(this.db)
     }
-    // check(): Promise<boolean> {
-    //     const sqlite3 = require('sqlite3').verbose();
-    //     var db = new sqlite3.Database(this.db)       
-    //     return new Promise((resolve, reject) => {
-    //         db.all(this.readCommand, [this.operationName ], (err:any, rows:[]) => {                
-    //             if (err) {      //Remove business logic from this class
-    //                 db.close()
-    //                 reject(err)
-    //             } 
-    //             else if (rows.length>0) {
-    //                 //TODO
-    //                 resolve(true)
-    //             }
-    //             else {                                                  //TODO string in a more readable way
-    //                 db.run(this.insertCommand, [this.operationName, new Date().toString(), new Date().toString(), this.schedureId], 
-    //                 (err: any) => {
-    //                     if (err) resolve(false)
-    //                     else resolve(true)
-    //                 })}                
-    //         })
-    //     })
-    // }
-
 }

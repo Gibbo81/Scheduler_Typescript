@@ -9,7 +9,9 @@ import { ActionFactory } from "./businessLogic/Actions/ActionFactory"
 var sqllite='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 
 //ReadConfigurationTest()
-StartPluto()
+//insertNewCyclicOperation('123Star', new Date(), 113)
+completeCyclicOperation('123Star', new Date())
+//StartPluto()
 //var y = readStatusPluto()
 //DeleteFileActionTestsManual(undefined)
 
@@ -19,6 +21,16 @@ console.log(100)
 function StartPluto() {
     var y = new CheckCyclicOperation(sqllite, 1)
     y.start("pluto non c'è", new Date(), 234).then(x => console.log(`started: ${x}`))
+}
+
+function insertNewCyclicOperation(operationName: string, date: Date, schedulerId: number) {
+    var y = new CheckCyclicOperation(sqllite, 1)
+    y.create(operationName, date, schedulerId).then(x => console.log(`created: ${operationName}`))
+}
+
+function completeCyclicOperation(operationName: string, date: Date) {
+    var y = new CheckCyclicOperation(sqllite, 1)
+    y.close(operationName, date).then(x => console.log(`closed: ${operationName}`))
 }
 
 function readStatusPluto() {
