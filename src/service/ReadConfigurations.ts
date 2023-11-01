@@ -10,19 +10,22 @@ export class ReadConfiguration{
 
     public async load(): Promise<AllConfiguration>{
         var fixedDtos = await this.readFixed(); //TODO: do not return a DTO but a class BL
-        var cyclicDtos = await this.readCyclic();
+        var cyclicDtos = await this.readCyclics();
         return new AllConfiguration(cyclicDtos, fixedDtos) 
     }
 
-    private async readCyclic() : Promise<CyclicOperation[]> {
+    private async readCyclics() : Promise<CyclicOperation[]> {
         var cyclicConfigurationsfiles = await this.searchJsonFiles(this.cycleFolder);
         var cyclicDtos: CyclicOperation[] = [];
-        for (const file of cyclicConfigurationsfiles) {
-            var content = await fs.readFile(file, 'utf8')
-            var dto = JSON.parse(content) as CyclingConfiguratrion
-            cyclicDtos.push(this.factoryC.build(dto))
-        }
+        for (const file of cyclicConfigurationsfiles) 
+            await this.readSinglecyclicConfiguration(file, cyclicDtos);
         return cyclicDtos;
+    }
+
+    private async readSinglecyclicConfiguration(file: string, cyclicDtos: CyclicOperation[]) {
+        var content = await fs.readFile(file, 'utf8');
+        var dto = JSON.parse(content) as CyclingConfiguratrion;
+        cyclicDtos.push(this.factoryC.build(dto));
     }
 
     private async readFixed()  : Promise<FixedConfiguratrion[]>{

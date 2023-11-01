@@ -3,17 +3,20 @@ import { CyclingConfiguratrion } from "./service/dto/CyclingConfiguratrion"
 import { ReadConfiguration } from "./service/ReadConfigurations"
 import { CheckCyclicOperation } from "./SqlLite/CheckCyclicOperation"
 import { CyclicOperationFactory } from "./businessLogic/Operations/CyclicOperationFactory"
-import { DeleteFileAction } from "./businessLogic/Actions/DeleteFileAction"
+import { DeleteFilesAction } from "./businessLogic/Actions/DeleteFilesAction"
 import { ActionFactory } from "./businessLogic/Actions/ActionFactory"
+import { MoveFilesActionWithFilter, MoveFilesActionWithoutFilter } from "./businessLogic/Actions/MoveFilesActionWithoutFilter"
 
 var sqllite='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 
 //ReadConfigurationTest()
 //insertNewCyclicOperation('123Star', new Date(), 113)
-completeCyclicOperation('123Star', new Date())
+//completeCyclicOperation('123Star', new Date())
 //StartPluto()
 //var y = readStatusPluto()
 //DeleteFileActionTestsManual(undefined)
+//MoveFilesActionTest_NoFilter('C:/zzzzzz/','C:/zzzzzz/pppppp/');
+MoveFilesActionTest_WithFilter('C:/zzzzzz/','C:/zzzzzz/pppppp/', 'tit');
 
 console.log(100)
 
@@ -42,7 +45,7 @@ function readStatusPluto() {
 }
 
 function  DeleteFileActionTestsManual(filter: string ){
-    var a = new DeleteFileAction('C:/pppp/', filter)
+    var a = new DeleteFilesAction('C:/pppp/', filter)
     a.execute().then(x => console.log(`result : ${JSON.stringify(x)}`))
 }
 
@@ -56,3 +59,11 @@ function ReadConfigurationTest() {
         })
 }
 
+function MoveFilesActionTest_NoFilter(from: string, to: string) {
+    var m = new MoveFilesActionWithoutFilter(from, to);
+    m.execute().then(x => console.log(`result : ${JSON.stringify(x)}`))
+}
+function MoveFilesActionTest_WithFilter(from: string, to: string, filter: string) {
+    var m = new MoveFilesActionWithFilter(from, to, filter);
+    m.execute().then(x => console.log(`result : ${JSON.stringify(x)}`))
+}

@@ -1,5 +1,5 @@
 import { Action } from "./Action";
-import { DeleteFileAction } from "./DeleteFileAction";
+import { DeleteFilesAction } from "./DeleteFilesAction";
 
 export class ActionFactory{
 
@@ -18,7 +18,7 @@ export class ActionFactory{
         if (!conf.folder)
             throw new Error("Action deletefile is missing folder.");
         var subNamePart = (conf.subNamePart) ? conf.subNamePart : null;
-        return new DeleteFileAction(conf.folder, subNamePart);
+        return new DeleteFilesAction(conf.folder, subNamePart);
     }
 
     private checkName(conf: { [key: string]: string; }) {

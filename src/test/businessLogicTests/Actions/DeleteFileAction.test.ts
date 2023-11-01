@@ -1,4 +1,4 @@
-import { DeleteFileAction } from "../../../businessLogic/Actions/DeleteFileAction"
+import { DeleteFilesAction } from "../../../businessLogic/Actions/DeleteFilesAction"
 
 test('No files are present therefore no files are deleted', async () =>{        
     var action = new DeleteFileActionWrapper("", "", [])
@@ -56,7 +56,7 @@ test('Four files are present but only two matche the filter, two are deleted', a
   }
 )
 
-class DeleteFileActionWrapper extends DeleteFileAction{
+class DeleteFileActionWrapper extends DeleteFilesAction{
     public Deleted : string[] = []
     constructor(folder:string,  subName:string, private filesPresent :string[]){ super(folder, subName) }
 

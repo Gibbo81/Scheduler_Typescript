@@ -1,5 +1,5 @@
 import { ActionFactory } from "../../../businessLogic/Actions/ActionFactory"
-import { DeleteFileAction } from "../../../businessLogic/Actions/DeleteFileAction";
+import { DeleteFilesAction } from "../../../businessLogic/Actions/DeleteFilesAction";
 
 test("Action factory doesn't find action name, throws error", () =>{        
     var factory = new ActionFactory()
@@ -24,7 +24,7 @@ test('Action factory creates "DeleteFile" action, no error the action is created
 
     var result = factory.create(configurations);
 
-    expect(result).toBeInstanceOf(DeleteFileAction)
+    expect(result).toBeInstanceOf(DeleteFilesAction)
   }
 )
 

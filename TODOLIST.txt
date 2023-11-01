@@ -1,10 +1,10 @@
 Main argument:
-  --CyclicOperation 
+	--CyclicOperation 
   
   
   
 Workinh on:  
-
+	--move all files action  --> divided in two, MISSING unit tests
 
 
 
@@ -12,5 +12,6 @@ Workinh on:
 
 
 //FUTURE
+--  fixed operation
 --  file system operations recursive behaviour
 
