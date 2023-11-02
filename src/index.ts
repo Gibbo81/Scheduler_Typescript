@@ -5,7 +5,8 @@ import { CheckCyclicOperation } from "./SqlLite/CheckCyclicOperation"
 import { CyclicOperationFactory } from "./businessLogic/Operations/CyclicOperationFactory"
 import { DeleteFilesAction } from "./businessLogic/Actions/DeleteFilesAction"
 import { ActionFactory } from "./businessLogic/Actions/ActionFactory"
-import { MoveFilesActionWithFilter, MoveFilesActionWithoutFilter } from "./businessLogic/Actions/MoveFilesActionWithoutFilter"
+import { MoveFilesActionWithoutFilter } from "./businessLogic/Actions/MoveFilesActionWithoutFilter"
+import { MoveFilesActionWithFilter } from "./businessLogic/Actions/MoveFilesActionWithFilter"
 
 var sqllite='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 

@@ -13,8 +13,12 @@ export abstract class BaseFiles {
         return files;
     }
 
-    protected async moveFiles(files: string[], startingFolder: string, destinationFolder: string) {
+    protected async moveFiles(files: string[], startingFolder: string, destinationFolder: string): Promise<void> {
         for (var f of files)
-            await fs.rename(startingFolder + f, destinationFolder + f);
+            await this.moveFile(startingFolder, f, destinationFolder);
+    }
+
+    protected async moveFile(startingFolder: string, f: string, destinationFolder: string) : Promise<void> {
+        await fs.rename(startingFolder + f, destinationFolder + f);
     }
 }

@@ -4,7 +4,7 @@ Main argument:
   
   
 Workinh on:  
-	--move all files action  --> divided in two, MISSING unit tests
+	--move all files action (done action) --> missing factory 
 
 
 
