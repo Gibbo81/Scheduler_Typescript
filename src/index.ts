@@ -4,7 +4,7 @@ import { ReadConfiguration } from "./service/ReadConfigurations"
 import { CheckCyclicOperation } from "./SqlLite/CheckCyclicOperation"
 import { CyclicOperationFactory } from "./businessLogic/Operations/CyclicOperationFactory"
 import { DeleteFilesAction } from "./businessLogic/Actions/DeleteFilesAction"
-import { ActionFactory } from "./businessLogic/Actions/ActionFactory"
+import { ActionFactory } from "./service/ActionFactory"
 import { MoveFilesActionWithoutFilter } from "./businessLogic/Actions/MoveFilesActionWithoutFilter"
 import { MoveFilesActionWithFilter } from "./businessLogic/Actions/MoveFilesActionWithFilter"
 

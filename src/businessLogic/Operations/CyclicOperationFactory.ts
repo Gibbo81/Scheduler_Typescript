@@ -1,6 +1,6 @@
 import { CheckCyclicOperation } from "../../SqlLite/CheckCyclicOperation";
 import { CyclingConfiguratrion } from "../../service/dto/CyclingConfiguratrion";
-import { ActionFactory } from "../Actions/ActionFactory";
+import { ActionFactory } from "../../service/ActionFactory";
 import { CyclicOperation } from "./CyclicOperation";
 
 

@@ -1,4 +1,4 @@
-import { ActionFactory } from "../../../businessLogic/Actions/ActionFactory";
+import { ActionFactory } from "../../../service/ActionFactory";
 import { CyclicOperationFactory } from "../../../businessLogic/Operations/CyclicOperationFactory";
 import { CyclingConfiguratrion } from "../../../service/dto/CyclingConfiguratrion";
 
