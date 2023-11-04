@@ -7,9 +7,9 @@ export abstract class DeleteAction implements Action{
     protected abstract deleteEntity(f: string): Promise<undefined> 
 
     async execute(): Promise<{ [key: string]: string; }> {
-        var files = await this.readAllEntities()
-        files = this.applyFilter(files, this.subNamePart);
-        for (var f of files) 
+        var entities = await this.readAllEntities()
+        entities = this.applyFilter(entities, this.subNamePart);
+        for (var f of entities) 
             await this.deleteEntity(f)
         return {'DeleteAction' : 'Completed'}
     }

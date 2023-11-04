@@ -2,9 +2,9 @@ import { ReadConfiguration } from "./service/ReadConfigurations"
 import { CheckCyclicOperation } from "./SqlLite/CheckCyclicOperation"
 import { CyclicOperationFactory } from "./businessLogic/Operations/CyclicOperationFactory"
 import { ActionFactory } from "./service/ActionFactory"
-import { MoveFilesActionWithoutFilter } from "./businessLogic/Actions/MoveFilesActionWithoutFilter"
-import { MoveFilesActionWithFilter } from "./businessLogic/Actions/MoveFilesActionWithFilter"
 import { DeleteFilesAction } from "./fileSystem/actions/DeleteFilesAction"
+import { MoveFilesActionWithFilter } from "./fileSystem/actions/MoveFileActionWithFilter"
+import { MoveFilesActionWithoutFilter } from "./fileSystem/actions/MoveFilesActionWithoutFilter"
 
 var sqllite='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 
