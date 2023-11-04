@@ -1,5 +1,5 @@
 import { Action } from "../businessLogic/Actions/Action";
-import { DeleteFilesAction } from "../businessLogic/Actions/DeleteFilesAction";
+import { DeleteFilesAction } from "../fileSystem/actions/DeleteFilesAction";
 
 export class ActionFactory{
 

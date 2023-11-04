@@ -7,12 +7,6 @@ export abstract class BaseFiles {
         return list.filter(x => x.isFile()).map(y => y.name);
     }
 
-    protected applyFilter(files: string[], subNamePart: string) {
-        if (subNamePart)
-            files = files.filter(f => f.includes(subNamePart));
-        return files;
-    }
-
     protected async moveFiles(files: string[], startingFolder: string, destinationFolder: string): Promise<void> {
         for (var f of files)
             await this.moveFile(startingFolder, f, destinationFolder);

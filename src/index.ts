@@ -1,12 +1,10 @@
-import { read } from "fs"
-import { CyclingConfiguratrion } from "./service/dto/CyclingConfiguratrion"
 import { ReadConfiguration } from "./service/ReadConfigurations"
 import { CheckCyclicOperation } from "./SqlLite/CheckCyclicOperation"
 import { CyclicOperationFactory } from "./businessLogic/Operations/CyclicOperationFactory"
-import { DeleteFilesAction } from "./businessLogic/Actions/DeleteFilesAction"
 import { ActionFactory } from "./service/ActionFactory"
 import { MoveFilesActionWithoutFilter } from "./businessLogic/Actions/MoveFilesActionWithoutFilter"
 import { MoveFilesActionWithFilter } from "./businessLogic/Actions/MoveFilesActionWithFilter"
+import { DeleteFilesAction } from "./fileSystem/actions/DeleteFilesAction"
 
 var sqllite='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 

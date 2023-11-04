@@ -1,5 +1,5 @@
-import { ActionFactory } from "../../../service/ActionFactory"
-import { DeleteFilesAction } from "../../../businessLogic/Actions/DeleteFilesAction";
+import { ActionFactory } from "../../service/ActionFactory"
+import { DeleteFilesAction } from "../../fileSystem/actions/DeleteFilesAction";
 
 test("Action factory doesn't find action name, throws error", () =>{        
     var factory = new ActionFactory()
