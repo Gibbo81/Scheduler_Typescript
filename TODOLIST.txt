@@ -4,11 +4,11 @@ Main argument:
   
   
 Workinh on:  
-	--move all files action (done action) --> missing factory 
+	--move all files action (done action - done testing - done factory)
 
 
 
--- Factory and factory tests -> To do when creating new actions
+-- Factory and factory tests -> To do when creating new actions (move files and delete files)
 
 
 //FUTURE

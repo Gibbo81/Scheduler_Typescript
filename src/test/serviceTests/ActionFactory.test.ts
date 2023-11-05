@@ -1,5 +1,7 @@
 import { ActionFactory } from "../../service/ActionFactory"
 import { DeleteFilesAction } from "../../fileSystem/actions/DeleteFilesAction";
+import { MoveFilesActionWithoutFilter } from "../../fileSystem/actions/MoveFilesActionWithoutFilter";
+import { MoveFilesActionWithFilter } from "../../fileSystem/actions/MoveFileActionWithFilter";
 
 test("Action factory doesn't find action name, throws error", () =>{        
     var factory = new ActionFactory()
@@ -15,10 +17,74 @@ test("Action factory doesn't find action name, throws error", () =>{
     }
 })
 
-test('Action factory creates "DeleteFile" action, no error the action is created', () =>{        
+test("Action factory creates 'MoveFiles' action but doesn't find action folder, throws error", () =>{        
     var factory = new ActionFactory()
     var configurations = { 
-        name : 'deleteFILE',
+        name : 'MoveFilEs',
+        destinationFolder : 'star456'
+    }
+
+    try{
+        factory.create(configurations);
+        expect(2).toBe(1)
+    }
+    catch(e){
+        expect(e.message).toBe('Action movefile is missing starting folder.')
+        expect(e).toBeInstanceOf(Error)
+    }
+})
+
+test("Action factory creates 'MoveFiles' action but doesn't find destination folder, throws error", () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'MoveFilEs',
+        folder : 'star456',
+        subNamePart : 'uu'
+    }
+
+    try{
+        factory.create(configurations);
+        expect(2).toBe(1)
+    }
+    catch(e){
+        expect(e.message).toBe('Action movefile is missing destination folder.')
+        expect(e).toBeInstanceOf(Error)
+    }
+})
+
+test('Action factory creates "MoveFiles" action without a filter, no error the right action is created', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'MoveFilEs',
+        folder : '123pippo',
+        destinationFolder : 'star456'
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(MoveFilesActionWithoutFilter)
+  }
+)
+
+test('Action factory creates "MoveFiles" action with a filter, no error the right action is created', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'MoveFilEs',
+        folder : '123pippo',
+        destinationFolder : 'star456',
+        subNamePart : 'uu'
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(MoveFilesActionWithFilter)
+  }
+)
+
+test('Action factory creates "DeleteFiles" action, no error the action is created', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'deleteFILES',
         folder : '123pippo'
     }
 
@@ -28,16 +94,16 @@ test('Action factory creates "DeleteFile" action, no error the action is created
   }
 )
 
-test("Action factory creates 'DeleteFile' action but doesn't find action folder, throws error", () =>{        
+test("Action factory creates 'DeleteFiles' action but doesn't find action folder, throws error", () =>{        
     var factory = new ActionFactory()
-    var configurations = {name : 'deleteFILE'}
+    var configurations = {name : 'deleteFILES'}
 
     try{
         factory.create(configurations);
         expect(2).toBe(1)
     }
     catch(e){
-        expect(e.message).toBe('Action deletefile is missing folder.')
+        expect(e.message).toBe('Action deletefile is missing working folder.')
         expect(e).toBeInstanceOf(Error)
     }
 })

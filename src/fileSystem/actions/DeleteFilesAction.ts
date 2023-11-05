@@ -1,7 +1,6 @@
 import { DeleteAction } from "../../businessLogic/Actions/DeleteAction";
 import fs from "fs/promises";
 
-
 export class DeleteFilesAction extends DeleteAction{
     constructor(private folder:string, subNamePart:string){ super(subNamePart) }
     

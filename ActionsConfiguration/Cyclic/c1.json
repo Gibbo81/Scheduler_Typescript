@@ -2,8 +2,8 @@
   "OperationName" : "plutus",
   "CyclingTime" : 20,
   "Actions" :[
-    {"name":"deletefile", "folder":"C:/pppp/low", "subNamePart":"oi"},
-    {"name":"deletefile", "folder":"C:/pppp/high"}
+    {"name":"deletefiles", "folder":"C:/pppp/low", "subNamePart":"oi"},
+    {"name":"deletefiles", "folder":"C:/pppp/high"}
   ],
   "Parallel": false
 }
