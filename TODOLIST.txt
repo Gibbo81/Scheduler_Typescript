@@ -4,7 +4,7 @@ Main argument:
   
   
 Workinh on:  
-	--rename all files action 
+	--rename all files action (create abstract class, its unit test, missing concrete implementation)
 
 
 
