@@ -4,7 +4,7 @@ Main argument:
   
   
 Workinh on:  
-	--move all files action (done action - done testing - done factory)
+	--rename all files action 
 
 
 
@@ -15,3 +15,7 @@ Workinh on:
 --  fixed operation
 --  file system operations recursive behaviour
 
+
+
+DONE:
+	--move all files action DONE

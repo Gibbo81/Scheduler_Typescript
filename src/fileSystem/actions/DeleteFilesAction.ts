@@ -1,15 +1,20 @@
 import { DeleteAction } from "../../businessLogic/Actions/DeleteAction";
-import fs from "fs/promises";
+import { BaseFilesystemCommands } from "./BaseFileSystemCommands";
 
 export class DeleteFilesAction extends DeleteAction{
-    constructor(private folder:string, subNamePart:string){ super(subNamePart) }
+    private commonCommands: BaseFilesystemCommands
+    
+    constructor(private folder:string, subNamePart:string){
+        super(subNamePart) 
+        this.commonCommands = new BaseFilesystemCommands()
+    }
     
     protected async readAllEntities(): Promise<string[]> {
-        var list = await fs.readdir(this.folder, { withFileTypes: true });
-        return list.filter(x => x.isFile()).map(y => y.name);
+        return await this.commonCommands.readAllFiles(this.folder)
+        
     }    
 
     protected async deleteEntity(f: string): Promise<undefined> {
-        await fs.unlink(this.folder + f);
+        await this.commonCommands.deleteFile(this.folder + f)        
     }
 }

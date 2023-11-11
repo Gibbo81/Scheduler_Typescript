@@ -1,15 +1,18 @@
 import { MoveActionWithoutFilter } from "../../businessLogic/Actions/MoveActionWithoutFilter";
-import fs from "fs/promises";
+import { BaseFilesystemCommands } from "./BaseFileSystemCommands";
 
 export class MoveFilesActionWithoutFilter extends MoveActionWithoutFilter{
-    constructor(private startingFolder:string, private destinationFolder:string) {super()}
+    private commonCommands: BaseFilesystemCommands
+
+    constructor(private startingFolder:string, private destinationFolder:string) {
+        super()
+        this.commonCommands = new BaseFilesystemCommands()
+    }
     
     protected async readAllEntities(): Promise<string[]> {
-        var list = await fs.readdir(this.startingFolder, { withFileTypes: true });
-        return list.filter(x => x.isFile()).map(y => y.name);
+        return await this.commonCommands.readAllFiles(this.startingFolder)
     }
     protected async moveEntities(files: string[]): Promise<void> {
-        for (var f of files)
-            await fs.rename(this.startingFolder + f, this.destinationFolder + f);
+        await this.commonCommands.moveEntities(files, this.startingFolder, this.destinationFolder)
     }       
 }
