@@ -4,11 +4,11 @@ Main argument:
   
   
 Workinh on:  
-	--rename all files action (create abstract class, its unit test, missing concrete implementation)
+	
 
 
 
--- Factory and factory tests -> To do when creating new actions (move files and delete files)
+-- Factory and factory tests -> To do when creating new actions (move files - delete files - rename files)
 
 
 //FUTURE
@@ -18,4 +18,6 @@ Workinh on:
 
 
 DONE:
-	--move all files action DONE
+	--move all files action 	DONE
+	--rename all files action 	DONE
+	--delete all files action 	DONE

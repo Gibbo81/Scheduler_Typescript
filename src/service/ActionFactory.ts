@@ -2,6 +2,7 @@ import { Action } from "../businessLogic/Actions/Action";
 import { DeleteFilesAction } from "../fileSystem/actions/DeleteFilesAction";
 import { MoveFilesActionWithFilter } from "../fileSystem/actions/MoveFileActionWithFilter";
 import { MoveFilesActionWithoutFilter } from "../fileSystem/actions/MoveFilesActionWithoutFilter";
+import { RenameFilesAction } from "../fileSystem/actions/RenameFilesAction";
 
 export class ActionFactory{
 
@@ -12,10 +13,17 @@ export class ActionFactory{
                 return this.createDeletefilesAction(conf);
             case "movefiles":
                 return this.createMoveFileAction(conf)
+            case "renamefiles":
+                return this.createRenameFileAction(conf)
         }
         
 
-        return undefined;
+        throw new Error("Unrecognized Action.");
+    }
+
+    private createRenameFileAction(conf: { [key: string]: string; }): Action {
+        this.CheckParametersForRenameAction(conf);
+        return new RenameFilesAction(conf.folder, conf.search, conf.substitute)        
     }
 
     private createDeletefilesAction(conf: { [key: string]: string; }): Action {
@@ -24,10 +32,19 @@ export class ActionFactory{
         return new DeleteFilesAction(conf.folder, subNamePart);
     }
 
-    createMoveFileAction(conf: { [key: string]: string; }): Action {
+    private createMoveFileAction(conf: { [key: string]: string; }): Action {
         this.CheckParametersForMoveAction(conf);
         return (conf.subNamePart) ? new MoveFilesActionWithFilter(conf.folder, conf.destinationFolder, conf.subNamePart)
                                   : new MoveFilesActionWithoutFilter(conf.folder, conf.destinationFolder)
+    }
+
+    private CheckParametersForRenameAction(conf: { [key: string]: string; }) {
+        if (!conf.folder)
+            throw new Error("Action renamefile is missing starting folder.");
+        if (!conf.search)
+            throw new Error("Action renamefile is missing search pattern.");
+        if (!conf.substitute)
+            throw new Error("Action renamefile is missing substitute value.");
     }
 
     private CheckParametersForDeleteAction(conf: { [key: string]: string; }) {

@@ -5,17 +5,19 @@ import { ActionFactory } from "./service/ActionFactory"
 import { DeleteFilesAction } from "./fileSystem/actions/DeleteFilesAction"
 import { MoveFilesActionWithFilter } from "./fileSystem/actions/MoveFileActionWithFilter"
 import { MoveFilesActionWithoutFilter } from "./fileSystem/actions/MoveFilesActionWithoutFilter"
+import { RenameFilesAction } from "./fileSystem/actions/RenameFilesAction"
 
 var sqllite='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 
-//ReadConfigurationTest()
+ReadConfigurationTest()
 //insertNewCyclicOperation('123Star', new Date(), 113)
 //completeCyclicOperation('123Star', new Date())
 //StartPluto()
 //var y = readStatusPluto()
 //DeleteFileActionTestsManual(undefined)
 //MoveFilesActionTest_NoFilter('C:/zzzzzz/','C:/zzzzzz/pppppp/');
-MoveFilesActionTest_WithFilter('C:/zzzzzz/','C:/zzzzzz/pppppp/', 'tit');
+//MoveFilesActionTest_WithFilter('C:/zzzzzz/','C:/zzzzzz/pppppp/', 'tit');
+//RenameFilesActionsTest_WithFilter('C:/pppppp/', '01', '9889')
 
 console.log(100)
 
@@ -64,5 +66,10 @@ function MoveFilesActionTest_NoFilter(from: string, to: string) {
 }
 function MoveFilesActionTest_WithFilter(from: string, to: string, filter: string) {
     var m = new MoveFilesActionWithFilter(from, to, filter);
+    m.execute().then(x => console.log(`result : ${JSON.stringify(x)}`))
+}
+
+function RenameFilesActionsTest_WithFilter(folder: string, filter: string, substitute: string) {
+    var m = new RenameFilesAction( folder, filter, substitute)
     m.execute().then(x => console.log(`result : ${JSON.stringify(x)}`))
 }

@@ -1,5 +1,4 @@
 import fs from "fs/promises";
-import { Dirent } from "node:fs";
 
 export class BaseFilesystemCommands {
 

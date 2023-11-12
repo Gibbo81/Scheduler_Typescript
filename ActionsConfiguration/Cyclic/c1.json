@@ -2,8 +2,11 @@
   "OperationName" : "plutus",
   "CyclingTime" : 20,
   "Actions" :[
-    {"name":"deletefiles", "folder":"C:/pppp/low", "subNamePart":"oi"},
-    {"name":"deletefiles", "folder":"C:/pppp/high"}
+    {"name":"deletefiles", "folder":"C:/pppp/low/", "subNamePart":"oi"},
+    {"name":"deletefiles", "folder":"C:/pppp/high/"},
+    {"name":"renamefiles", "folder":"C:/pppp/high/", "search":"01", "substitute":"ABACAB"},
+    {"name":"mOVEfiles", "folder":"C:/pppp/high/", "destinationFolder": "C:/pppp/high/uiu/"},
+    {"name":"mOVEfiles", "folder":"C:/pppp/high/", "destinationFolder": "C:/pppp/high/uiu/", "subNamePart": "sub"}
   ],
   "Parallel": false
 }
