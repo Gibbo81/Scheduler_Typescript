@@ -6,10 +6,13 @@ import { DeleteFilesAction } from "./fileSystem/actions/DeleteFilesAction"
 import { MoveFilesActionWithFilter } from "./fileSystem/actions/MoveFileActionWithFilter"
 import { MoveFilesActionWithoutFilter } from "./fileSystem/actions/MoveFilesActionWithoutFilter"
 import { RenameFilesAction } from "./fileSystem/actions/RenameFilesAction"
+import { CallAnExecutableFireAndForget } from "./businessLogic/Actions/CallAnExecutableFireAndForget"
 
-var sqllite='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
+var sqllite    ='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
+var executable ='C:/Repo/Scheduler_Typescript/src/fileSystem/TestExecutable/ReadPrameters/ReadParameter.exe'
 
-ReadConfigurationTest()
+TestCallAnExecutableFireAndForget()
+//ReadConfigurationTest()
 //insertNewCyclicOperation('123Star', new Date(), 113)
 //completeCyclicOperation('123Star', new Date())
 //StartPluto()
@@ -21,6 +24,11 @@ ReadConfigurationTest()
 
 console.log(100)
 
+
+function TestCallAnExecutableFireAndForget(){
+    var action = new CallAnExecutableFireAndForget(executable, {'pippo': "12", pluto : 'yyy' })
+    action.execute().then(x => console.log(`completed: ${JSON.stringify(x)}`))
+}
 
 function StartPluto() {
     var y = new CheckCyclicOperation(sqllite, 1)
