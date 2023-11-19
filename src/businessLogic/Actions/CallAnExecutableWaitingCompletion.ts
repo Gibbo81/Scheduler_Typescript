@@ -1,16 +1,25 @@
 import { Action } from "./Action";
 
-export abstract class CallAnExecutableFireAndForget implements Action {
+//Myexe.exe --drink Beer --food Chicken
+//FireAnd forget
+export class CallAnExecutableWaitingCompletion implements Action {
     protected parameters : string[]
-    protected abstract lunch():void;
 
     constructor(protected executablePath: string, parameters: { [key: string]: string }) { 
         this.parameters = this.prepareParameters(parameters)
     }
 
     execute(): Promise<{ [key: string]: string; }> {
-        this.lunch();
-        return new Promise((resolve, reject) => {resolve({ 'CallAnExecutable': 'Completed' })})   
+        return new Promise((resolve, reject) => {
+            var exec = require('child_process').execFile;
+            exec(this.executablePath, 
+                this.parameters, 
+                (err, data) =>{
+                    if (err)
+                        reject()
+                    resolve({ 'CallAnExecutable': 'Completed' })
+                })
+        })
     }
 
     private prepareParameters(parameters: { [key: string]: string }): string[] {

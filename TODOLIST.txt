@@ -5,7 +5,7 @@ Main argument:
   
 Workinh on:  
 	
--- CallAnExecutable action (created class all inside business logic, mising: slit in 2 with abstract class and split in 2 with waiting and fire and forget)
+-- CallAnExecutable action (created class all inside business logic, mising: split in 2 with abstract class and split in 2 with waiting and fire and forget)
 
 
 -- Factory and factory tests -> To do when creating new actions (move files - delete files - rename files)

@@ -6,7 +6,7 @@ import { DeleteFilesAction } from "./fileSystem/actions/DeleteFilesAction"
 import { MoveFilesActionWithFilter } from "./fileSystem/actions/MoveFileActionWithFilter"
 import { MoveFilesActionWithoutFilter } from "./fileSystem/actions/MoveFilesActionWithoutFilter"
 import { RenameFilesAction } from "./fileSystem/actions/RenameFilesAction"
-import { CallAnExecutableFireAndForget } from "./businessLogic/Actions/CallAnExecutableFireAndForget"
+import { CallAnExecutableFireAndForgetFromFileSystem } from "./fileSystem/actions/CallAnExecutableFireAndForgetFromFileSystem"
 
 var sqllite    ='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 var executable ='C:/Repo/Scheduler_Typescript/src/fileSystem/TestExecutable/ReadPrameters/ReadParameter.exe'
@@ -26,7 +26,7 @@ console.log(100)
 
 
 function TestCallAnExecutableFireAndForget(){
-    var action = new CallAnExecutableFireAndForget(executable, {'pippo': "12", pluto : 'yyy' })
+    var action = new CallAnExecutableFireAndForgetFromFileSystem(executable, {'pippo': "12", pluto : 'yyy' })
     action.execute().then(x => console.log(`completed: ${JSON.stringify(x)}`))
 }
 
