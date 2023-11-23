@@ -17,7 +17,7 @@ export class ActionFactory{
                 return this.createMoveFileAction(conf)
             case "renamefiles":
                 return this.createRenameFileAction(conf)
-            case "callexe"://TODO: working on
+            case "callexe":
                 return this.createCallEexcutableAction(conf)
         }
         
@@ -58,18 +58,20 @@ export class ActionFactory{
     private preparePArametersForExeAction(conf: { [key: string]: string; }) {
         var parameter: { [key: string]: string; } = {};
         for (var key in conf)
-            if (this.isAnExeParameter(key))
-                parameter.key = conf[key];
+            if (this.isAParameterForTheExecutable(key))
+                parameter[key] = conf[key];
         return parameter;
     }
 
-    private isAnExeParameter(key: string) {
-        return key !== 'exepath' && key !== 'fireandforget';
+    private isAParameterForTheExecutable(key: string) {
+        return key !== 'exepath' && key !== 'fireandforget' && key !== 'name';
     }
 
     private CheckParametersForCallExecutableAction(conf: { [key: string]: string; }) {
         if (!conf.exepath)
             throw new Error("Action call executable is missing exe path.");
+        if (!conf.exepath.endsWith(".exe"))
+            throw new Error("Action call executable has an executable path that do not end in '.exe'.");
         if (!conf.fireandforget)
             throw new Error("Action call executable is missing working mode.");
     }

@@ -2,7 +2,9 @@
   "OperationName" : "Qui-qua",
   "CyclingTime" : 301,
   "Actions" :[
-    {"name":"deletefiles", "folder":"C:/pppp/", "subNamePart":"pip"}
+    {"name":"deletefiles", "folder":"C:/pppp/", "subNamePart":"pip"},
+    {"name":"callexe", "exepath":"C:/pppp/o.exe", "fireandforget":"true", "pippus":"plutus"},
+    {"name":"callexe", "exepath":"C:/pppp/o.exe", "fireandforget":"false"}
   ],
   "Parallel": true
 }

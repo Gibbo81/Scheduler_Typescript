@@ -3,6 +3,91 @@ import { DeleteFilesAction } from "../../fileSystem/actions/DeleteFilesAction";
 import { MoveFilesActionWithoutFilter } from "../../fileSystem/actions/MoveFilesActionWithoutFilter";
 import { MoveFilesActionWithFilter } from "../../fileSystem/actions/MoveFileActionWithFilter";
 import { RenameFilesAction } from "../../fileSystem/actions/RenameFilesAction";
+import { CallAnExecutableFireAndForgetFromFileSystem } from "../../fileSystem/actions/CallAnExecutableFireAndForgetFromFileSystem";
+import { CallAnExecutableWaitingCompletionFromFileSystem } from "../../fileSystem/actions/CallAnExecutableWaitingCompletionFromFileSystem";
+
+test('Action factory creates "callexe" action (fire and forget mode), no error inside the configurations, it creates the right action', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callexe',
+        fireandforget : 'true',
+        exepath : 'uu.exe',
+        par1 : 'sub1',
+        par2 : 'sub2',
+        p3: '3sub'
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(CallAnExecutableFireAndForgetFromFileSystem)
+  }
+)
+
+test('Action factory creates "callexe" action (waiting mode), no error inside the configurations, it creates the right action', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callexe',
+        fireandforget : 'false',
+        exepath : 'uu.exe'
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(CallAnExecutableWaitingCompletionFromFileSystem)
+  }
+)
+
+test("Action factory creates 'callexe' action but executable path is not valid (it doesn't end in .exe), throws error", () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callexe',
+        fireandforget : 'false',
+        exepath : 'uu'
+    }
+
+    try{
+        factory.create(configurations);
+        expect(2).toBe(1)
+    }
+    catch(e){
+        expect(e.message).toBe("Action call executable has an executable path that do not end in '.exe'.")
+        expect(e).toBeInstanceOf(Error)
+    }
+})
+
+test("Action factory creates 'callexe' action but doesn't find working mode, throws error", () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callexe',
+        exepath : 'uu.exe'
+    }
+
+    try{
+        factory.create(configurations);
+        expect(2).toBe(1)
+    }
+    catch(e){
+        expect(e.message).toBe('Action call executable is missing working mode.')
+        expect(e).toBeInstanceOf(Error)
+    }
+})
+
+test("Action factory creates 'callexe' action but doesn't find exepath, throws error", () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callexe',
+        fireandforget : 'true'
+    }
+
+    try{
+        factory.create(configurations);
+        expect(2).toBe(1)
+    }
+    catch(e){
+        expect(e.message).toBe('Action call executable is missing exe path.')
+        expect(e).toBeInstanceOf(Error)
+    }
+})
 
 test("Action factory creates 'renamefiles' action but doesn't find folder, throws error", () =>{        
     var factory = new ActionFactory()
