@@ -4,8 +4,6 @@ Main argument:
   
   
 Workinh on:  
-	
--- CallAnExecutable action (mising: some manual tests after the refactoring)
 
 
 -- Factory and factory tests -> To do when creating new actions (move files - delete files - rename files)
@@ -20,4 +18,5 @@ Workinh on:
 DONE:
 	--move all files action 	DONE
 	--rename all files action 	DONE
-	--delete all files action 	DONE
+	--delete all files action 	DONE		
+	--CallAnExecutable action  DONE

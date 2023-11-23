@@ -7,11 +7,13 @@ import { MoveFilesActionWithFilter } from "./fileSystem/actions/MoveFileActionWi
 import { MoveFilesActionWithoutFilter } from "./fileSystem/actions/MoveFilesActionWithoutFilter"
 import { RenameFilesAction } from "./fileSystem/actions/RenameFilesAction"
 import { CallAnExecutableFireAndForgetFromFileSystem } from "./fileSystem/actions/CallAnExecutableFireAndForgetFromFileSystem"
+import { CallAnExecutableWaitingCompletionFromFileSystem } from "./fileSystem/actions/CallAnExecutableWaitingCompletionFromFileSystem"
 
 var sqllite    ='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 var executable ='C:/Repo/Scheduler_Typescript/src/fileSystem/TestExecutable/ReadPrameters/ReadParameter.exe'
 
-TestCallAnExecutableFireAndForget()
+TestCallAnExecutableWaitingCompletion()
+//TestCallAnExecutableFireAndForget()
 //ReadConfigurationTest()
 //insertNewCyclicOperation('123Star', new Date(), 113)
 //completeCyclicOperation('123Star', new Date())
@@ -27,6 +29,11 @@ console.log(100)
 
 function TestCallAnExecutableFireAndForget(){
     var action = new CallAnExecutableFireAndForgetFromFileSystem(executable, {'pippo': "12", pluto : 'yyy' })
+    action.execute().then(x => console.log(`completed: ${JSON.stringify(x)}`))
+}
+
+function TestCallAnExecutableWaitingCompletion(){
+    var action = new CallAnExecutableWaitingCompletionFromFileSystem(executable, {'pippo': "12", pluto : 'yyy' })
     action.execute().then(x => console.log(`completed: ${JSON.stringify(x)}`))
 }
 
