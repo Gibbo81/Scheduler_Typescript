@@ -7,7 +7,8 @@ test('No entities are present therefore the actions does not move any entity', a
     var result = await action.execute()
 
     expect(action.Moved.length).toBe(0)
-    expect(result.MoveEntitiesActionWithoutFilter).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('MoveEntitiesActionWithoutFilter')
   }
 )
 
@@ -20,7 +21,8 @@ test('Two entities are present therefore the actions moves both', async () =>{
     expect(action.Moved.length).toBe(2)
     expect(action.Moved[0]).toBe(entities[0])
     expect(action.Moved[1]).toBe(entities[1])
-    expect(result.MoveEntitiesActionWithoutFilter).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('MoveEntitiesActionWithoutFilter')
   }
 )
 

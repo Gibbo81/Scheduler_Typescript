@@ -15,7 +15,9 @@ test('Creates the action with two couple, the execution takes four parameters', 
     expect(action.Parameters[1]).toBe('aaa')
     expect(action.Parameters[2]).toBe('--t')
     expect(action.Parameters[3]).toBe('222')
-    expect(result.CallAnExecutable).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('CallAnExecutable')
+    
   }
 )
 

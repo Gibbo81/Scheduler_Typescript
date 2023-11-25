@@ -10,6 +10,6 @@ export abstract class MoveActionWithFilter implements Action {
         var entities = await this.readAllEntities();        
         entities = entities.filter(f => f.includes(this.subNamePart));
         await this.moveEntities(entities);
-        return { 'MoveEntitiesAction': 'Completed' };
+        return { 'Name': 'MoveEntitiesAction', 'Status': 'Completed' }
     }
 }

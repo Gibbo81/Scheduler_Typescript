@@ -11,7 +11,7 @@ export abstract class DeleteAction implements Action{
         entities = this.applyFilter(entities, this.subNamePart);
         for (var f of entities) 
             await this.deleteEntity(f)
-        return {'DeleteAction' : 'Completed'}
+        return { 'Name': 'DeleteAction', 'Status': 'Completed' }
     }
 
     protected applyFilter(files: string[], subNamePart: string) {

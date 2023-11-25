@@ -11,6 +11,6 @@ export abstract class RenameActions implements Action{
         var toRename = entities.filter(f => f.includes(this.search));
         for (var e of toRename)
             await this.renameEntity(e, e.replace(this.search, this.substitute))
-        return { 'RenameActions': 'Completed' };
+        return { 'Name': 'RenameActions', 'Status': 'Completed' }
     }
-}
+} 

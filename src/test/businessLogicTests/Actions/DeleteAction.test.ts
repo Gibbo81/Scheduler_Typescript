@@ -6,7 +6,8 @@ test('No entities are present therefore no entities are deleted', async () =>{
     var result = await action.execute()
 
     expect(action.Deleted.length).toBe(0)
-    expect(result.DeleteAction).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('DeleteAction')
   }
 )
 
@@ -17,7 +18,8 @@ test('Four entities are present without any filter (empty string), all are delet
     var result = await action.execute()
 
     expect(action.Deleted.length).toBe(4)
-    expect(result.DeleteAction).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('DeleteAction')
   }
 )
 
@@ -28,7 +30,8 @@ test('Four entities are present without any filter (null), all are deleted', asy
     var result = await action.execute()
 
     expect(action.Deleted.length).toBe(4)
-    expect(result.DeleteAction).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('DeleteAction')
   }
 )
 
@@ -39,7 +42,8 @@ test('Four entities are present without any filter (undefined), all are deleted'
     var result = await action.execute()
 
     expect(action.Deleted.length).toBe(4)
-    expect(result.DeleteAction).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('DeleteAction')
   }
 )
 
@@ -52,7 +56,8 @@ test('Four entities are present but only two matche the filter, two are deleted'
     expect(action.Deleted.length).toBe(2)
     expect(action.Deleted[0]).toBe('1aa2')
     expect(action.Deleted[1]).toBe('aa1')
-    expect(result.DeleteAction).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('DeleteAction')
   }
 )
 

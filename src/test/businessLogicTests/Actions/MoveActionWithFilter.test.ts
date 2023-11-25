@@ -7,7 +7,8 @@ test('No entities are present therefore the actions does not move any entitiy', 
     var result = await action.execute()
 
     expect(action.Moved.length).toBe(0)
-    expect(result.MoveEntitiesAction).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('MoveEntitiesAction')
   }
 )
 
@@ -18,7 +19,8 @@ test('Two entities are present but they do not mathc the filter, therefore the a
     var result = await action.execute()
 
     expect(action.Moved.length).toBe(0)
-    expect(result.MoveEntitiesAction).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('MoveEntitiesAction')
   }
 )
 
@@ -31,7 +33,8 @@ test('Two entities are present, both match the filter,  therefore the actions mo
     expect(action.Moved.length).toBe(2)
     expect(action.Moved[0]).toBe(entities[0])
     expect(action.Moved[1]).toBe(entities[1])
-    expect(result.MoveEntitiesAction).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('MoveEntitiesAction')
   }
 )
 
@@ -43,7 +46,8 @@ test('Two entities are present, one match the filter,  therefore the actions mov
 
     expect(action.Moved.length).toBe(1)
     expect(action.Moved[0]).toBe(entities[0])
-    expect(result.MoveEntitiesAction).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('MoveEntitiesAction')
   }
 )
 

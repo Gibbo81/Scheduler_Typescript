@@ -8,7 +8,7 @@ export abstract class MoveActionWithoutFilter implements Action{
     async execute(): Promise<{ [key: string]: string; }> {
         var files = await this.readAllEntities()
         await this.moveEntities(files)
-        return {'MoveEntitiesActionWithoutFilter' : 'Completed'}
+        return { 'Name': 'MoveEntitiesActionWithoutFilter', 'Status': 'Completed' }
     }
 }
 

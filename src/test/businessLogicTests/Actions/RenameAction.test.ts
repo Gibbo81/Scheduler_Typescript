@@ -12,7 +12,8 @@ test('Three entities are present, two match the filter,  therefore the action re
     expect(action.RenamedNew[0]).toBe(entities[0].replace("pippo", 'pluto'))
     expect(action.RenamedOld[1]).toBe(entities[2])
     expect(action.RenamedNew[1]).toBe(entities[2].replace("pippo", 'pluto'))
-    expect(result.RenameActions).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('RenameActions')
   }
 )
 
@@ -24,7 +25,8 @@ test('Three entities are present, but no one matches the filter, the action does
 
     expect(action.RenamedOld.length).toBe(0)
     expect(action.RenamedNew.length).toBe(0)
-    expect(result.RenameActions).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('RenameActions')
   }
 )
 
@@ -36,7 +38,8 @@ test('No entities are present, the action does nothing', async () =>{
 
     expect(action.RenamedOld.length).toBe(0)
     expect(action.RenamedNew.length).toBe(0)
-    expect(result.RenameActions).toBe('Completed')
+    expect(result.Status).toBe('Completed')
+    expect(result.Name).toBe('RenameActions')
   }
 )
 
