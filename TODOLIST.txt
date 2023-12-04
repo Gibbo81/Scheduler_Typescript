@@ -4,7 +4,7 @@ Main argument:
   
   
 Workinh on:  
---	Action call a web API. created base abstract class CallRemoteMethod --> working on first concrete implementation class WebApiGet
+--	Action call a web API. created base abstract class CallRemoteMethod --> working on first concrete implementation class WebApiGet (cretaed factory) ready for next action
 
 -- Factory and factory tests -> To do when creating new actions (move files - delete files - rename files - call exe)
 

@@ -5,6 +5,90 @@ import { MoveFilesActionWithFilter } from "../../fileSystem/actions/MoveFileActi
 import { RenameFilesAction } from "../../fileSystem/actions/RenameFilesAction";
 import { CallAnExecutableFireAndForgetFromFileSystem } from "../../fileSystem/actions/CallAnExecutableFireAndForgetFromFileSystem";
 import { CallAnExecutableWaitingCompletionFromFileSystem } from "../../fileSystem/actions/CallAnExecutableWaitingCompletionFromFileSystem";
+import { WebApiGet } from "../../webCall/Actions/WebApiGet";
+
+test('Action factory creates "callremotemethod" action (GET), no error inside the configurations, it creates the right action', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callremotemethod',
+        verb : 'GeT',
+        route : 'https://jsonplaceholder.typicode.com/todos/4'
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(WebApiGet)
+  }
+)
+
+test('Action factory creates "callremotemethod" action (GET), no error inside the configurations, it creates the right action', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callremotemethod',
+        verb : 'GeT',
+        route : 'https://jsonplaceholder.typicode.com/todos/4'
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(WebApiGet)
+  }
+)
+
+test("Action factory creates 'callremotemethod' action, it doesn't recognize the verb, it throws an error", () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callremotemethod',
+        verb : 'WRONG ONE',
+        route : 'https://jsonplaceholder.typicode.com/todos/4'
+    }
+
+    try{
+        factory.create(configurations);
+        expect(2).toBe(1)
+    }
+    catch(e){
+        expect(e.message).toBe("Unrecognized WebMethod verb: WRONG ONE")
+        expect(e).toBeInstanceOf(Error)
+    }
+  }
+)
+
+test("Action factory creates 'callremotemethod' action, configuration doesn't include the verb, it throws an error", () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callremotemethod',
+        route : 'https://jsonplaceholder.typicode.com/todos/4'
+    }
+
+    try{
+        factory.create(configurations);
+        expect(2).toBe(1)
+    }
+    catch(e){
+        expect(e.message).toBe("Action call remote method is missing the verb.")
+        expect(e).toBeInstanceOf(Error)
+    }
+  }
+)
+
+test("Action factory creates 'callremotemethod' action, configuration doesn't include the route, it throws an error", () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callremotemethod',
+        verb : 'get',
+    }
+
+    try{
+        factory.create(configurations);
+        expect(2).toBe(1)
+    }
+    catch(e){
+        expect(e.message).toBe("Action call remote method is missing the route.")
+        expect(e).toBeInstanceOf(Error)
+    }
+  }
+)
 
 test('Action factory creates "callexe" action (fire and forget mode), no error inside the configurations, it creates the right action', () =>{        
     var factory = new ActionFactory()

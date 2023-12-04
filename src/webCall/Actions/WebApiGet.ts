@@ -17,7 +17,7 @@ export class WebApiGet extends CallRemoteMethod{
     // //for reference https://www.npmjs.com/package/axios
 //For testing https://jsonplaceholder.typicode.com/
 
-    // }
+
 
 
 

@@ -5,6 +5,7 @@ import { DeleteFilesAction } from "../fileSystem/actions/DeleteFilesAction";
 import { MoveFilesActionWithFilter } from "../fileSystem/actions/MoveFileActionWithFilter";
 import { MoveFilesActionWithoutFilter } from "../fileSystem/actions/MoveFilesActionWithoutFilter";
 import { RenameFilesAction } from "../fileSystem/actions/RenameFilesAction";
+import { WebApiGet } from "../webCall/Actions/WebApiGet";
 
 export class ActionFactory{
 
@@ -19,15 +20,26 @@ export class ActionFactory{
                 return this.createRenameFileAction(conf)
             case "callexe":
                 return this.createCallEexcutableAction(conf)
+            case "callremotemethod":
+                return this.createCallRemoteMethodAction(conf)
         }
         
 
         throw new Error("Unrecognized Action.");
     }
-
-    private createCallExecutableFileAction(conf: { [key: string]: string; }): Action {
-        this.CheckParametersForCallExecutableAction(conf);
-        return new RenameFilesAction(conf.folder, conf.search, conf.substitute)        
+    private createCallRemoteMethodAction(conf: { [key: string]: string; }): Action {
+        this.CheckParametersForCallRemoteMethodAction(conf);
+        switch(conf.verb.toLowerCase()){
+            case "get":
+                return new WebApiGet(conf.route)
+        }
+        throw new Error(`Unrecognized WebMethod verb: ${conf.verb}`);
+    }
+    private CheckParametersForCallRemoteMethodAction(conf: { [key: string]: string; }) {
+        if (!conf.verb)
+            throw new Error("Action call remote method is missing the verb.");
+        if (!conf.route)
+            throw new Error("Action call remote method is missing the route.");
     }
 
     private createRenameFileAction(conf: { [key: string]: string; }): Action {
