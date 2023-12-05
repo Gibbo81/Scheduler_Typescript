@@ -5,9 +5,11 @@ import { DeleteFilesAction } from "../fileSystem/actions/DeleteFilesAction";
 import { MoveFilesActionWithFilter } from "../fileSystem/actions/MoveFileActionWithFilter";
 import { MoveFilesActionWithoutFilter } from "../fileSystem/actions/MoveFilesActionWithoutFilter";
 import { RenameFilesAction } from "../fileSystem/actions/RenameFilesAction";
-import { WebApiGet } from "../webCall/Actions/WebApiGet";
+import { WebApiGetWaitingCompletion } from "../webCall/Actions/WebApiGetWaitingCompletion";
+import { WebApiGetWaitingFireAndForget } from "../webCall/Actions/WebApiGetWaitingFireAndForget";
 
 export class ActionFactory{
+    private readonly trueValue: string='true'
 
     public create(conf :{[key:string]:string}) : Action{
         this.checkName(conf);
@@ -29,17 +31,27 @@ export class ActionFactory{
     }
     private createCallRemoteMethodAction(conf: { [key: string]: string; }): Action {
         this.CheckParametersForCallRemoteMethodAction(conf);
-        switch(conf.verb.toLowerCase()){
+        if (conf.fireandforget === this.trueValue)
+            return this.createRemoteMethodFireAndForget(conf)        
+        else
+            return this.createRemoteMethodWaitingCompletion(conf)
+        
+    }
+
+    private createRemoteMethodWaitingCompletion(conf: { [key: string]: string; }) {
+        switch (conf.verb.toLowerCase()) {
             case "get":
-                return new WebApiGet(conf.route)
+                return new WebApiGetWaitingCompletion(conf.route);
         }
         throw new Error(`Unrecognized WebMethod verb: ${conf.verb}`);
     }
-    private CheckParametersForCallRemoteMethodAction(conf: { [key: string]: string; }) {
-        if (!conf.verb)
-            throw new Error("Action call remote method is missing the verb.");
-        if (!conf.route)
-            throw new Error("Action call remote method is missing the route.");
+
+    private createRemoteMethodFireAndForget(conf: { [key: string]: string; }) {
+        switch (conf.verb.toLowerCase()) {
+            case "get":
+                return new WebApiGetWaitingFireAndForget(conf.route);
+        }
+        throw new Error(`Unrecognized WebMethod verb: ${conf.verb}`);
     }
 
     private createRenameFileAction(conf: { [key: string]: string; }): Action {
@@ -61,13 +73,20 @@ export class ActionFactory{
 
     private createCallEexcutableAction(conf: { [key: string]: string; }): Action {
         this.CheckParametersForCallExecutableAction(conf);
-        var parameter = this.preparePArametersForExeAction(conf);        
-        return (conf.fireandforget === 'true') ?
+        var parameter = this.prepareParametersForExeAction(conf);        
+        return (conf.fireandforget === this.trueValue) ?
             new CallAnExecutableFireAndForgetFromFileSystem(conf.exepath, parameter) :
             new CallAnExecutableWaitingCompletionFromFileSystem(conf.exepath, parameter)
     }
 
-    private preparePArametersForExeAction(conf: { [key: string]: string; }) {
+    private CheckParametersForCallRemoteMethodAction(conf: { [key: string]: string; }) {
+        if (!conf.verb)
+            throw new Error("Action call remote method is missing the verb.");
+        if (!conf.route)
+            throw new Error("Action call remote method is missing the route.");
+    }
+
+    private prepareParametersForExeAction(conf: { [key: string]: string; }) {
         var parameter: { [key: string]: string; } = {};
         for (var key in conf)
             if (this.isAParameterForTheExecutable(key))

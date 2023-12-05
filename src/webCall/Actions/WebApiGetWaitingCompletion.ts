@@ -2,7 +2,7 @@ import axios from 'axios';
 import { CallRemoteMethod, RemoteCallResult } from '../../businessLogic/Actions/CallRemoteMethod';
 
 
-export class WebApiGet extends CallRemoteMethod{    
+export class WebApiGetWaitingCompletion extends CallRemoteMethod{    
     constructor(private route: string) {
         super()
     }

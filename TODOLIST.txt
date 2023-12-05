@@ -4,7 +4,8 @@ Main argument:
   
   
 Workinh on:  
---	Action call a web API. created base abstract class CallRemoteMethod --> working on first concrete implementation class WebApiGet (cretaed factory) ready for next action
+--	Action call a web API. created base abstract class CallRemoteMethod --> working on first concrete implementation class WebApiGet f&F/wait (cretaed factory) ready for next action
+	*** After all the actions do the manual test loading them from the configuration files
 
 -- Factory and factory tests -> To do when creating new actions (move files - delete files - rename files - call exe)
 
@@ -12,7 +13,7 @@ Workinh on:
 //FUTURE
 --  fixed operation
 --  file system operations recursive behaviour
-
+--  fix all actions to cath the exception and return a classic error
 
 
 DONE:

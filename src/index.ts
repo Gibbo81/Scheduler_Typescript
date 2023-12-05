@@ -8,7 +8,7 @@ import { MoveFilesActionWithoutFilter } from "./fileSystem/actions/MoveFilesActi
 import { RenameFilesAction } from "./fileSystem/actions/RenameFilesAction"
 import { CallAnExecutableFireAndForgetFromFileSystem } from "./fileSystem/actions/CallAnExecutableFireAndForgetFromFileSystem"
 import { CallAnExecutableWaitingCompletionFromFileSystem } from "./fileSystem/actions/CallAnExecutableWaitingCompletionFromFileSystem"
-import { WebApiGet } from "./webCall/Actions/WebApiGet"
+import { WebApiGetWaitingCompletion } from "./webCall/Actions/WebApiGetWaitingCompletion"
 
 var sqllite    ='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 var executable ='C:/Repo/Scheduler_Typescript/src/fileSystem/TestExecutable/ReadPrameters/ReadParameter.exe'
@@ -29,7 +29,7 @@ callRestAPI()
 console.log(100)
 
 function callRestAPI(){
-    var caller = new WebApiGet('https://jsonplaceholder.typicode.com/todos/1', null)
+    var caller = new WebApiGetWaitingCompletion('https://jsonplaceholder.typicode.com/todos/1', null)
     caller.execute().then(x => console.log(`completed: ${JSON.stringify(x)}`)) 
 }
 

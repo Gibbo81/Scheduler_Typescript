@@ -5,23 +5,25 @@ import { MoveFilesActionWithFilter } from "../../fileSystem/actions/MoveFileActi
 import { RenameFilesAction } from "../../fileSystem/actions/RenameFilesAction";
 import { CallAnExecutableFireAndForgetFromFileSystem } from "../../fileSystem/actions/CallAnExecutableFireAndForgetFromFileSystem";
 import { CallAnExecutableWaitingCompletionFromFileSystem } from "../../fileSystem/actions/CallAnExecutableWaitingCompletionFromFileSystem";
-import { WebApiGet } from "../../webCall/Actions/WebApiGet";
+import { WebApiGetWaitingCompletion } from "../../webCall/Actions/WebApiGetWaitingCompletion";
+import { WebApiGetWaitingFireAndForget } from "../../webCall/Actions/WebApiGetWaitingFireAndForget";
 
-test('Action factory creates "callremotemethod" action (GET), no error inside the configurations, it creates the right action', () =>{        
+test('Action factory creates "callremotemethod" action (GET - fire and forget), no error inside the configurations, it creates the right action', () =>{        
     var factory = new ActionFactory()
     var configurations = { 
         name : 'callremotemethod',
         verb : 'GeT',
+        fireandforget: 'true',
         route : 'https://jsonplaceholder.typicode.com/todos/4'
     }
 
     var result = factory.create(configurations);
 
-    expect(result).toBeInstanceOf(WebApiGet)
+    expect(result).toBeInstanceOf(WebApiGetWaitingFireAndForget)
   }
 )
 
-test('Action factory creates "callremotemethod" action (GET), no error inside the configurations, it creates the right action', () =>{        
+test('Action factory creates "callremotemethod" action GET (waiting for completion is the default), no error inside the configurations, it creates the right action', () =>{        
     var factory = new ActionFactory()
     var configurations = { 
         name : 'callremotemethod',
@@ -31,7 +33,7 @@ test('Action factory creates "callremotemethod" action (GET), no error inside th
 
     var result = factory.create(configurations);
 
-    expect(result).toBeInstanceOf(WebApiGet)
+    expect(result).toBeInstanceOf(WebApiGetWaitingCompletion)
   }
 )
 
@@ -78,7 +80,6 @@ test("Action factory creates 'callremotemethod' action, configuration doesn't in
         name : 'callremotemethod',
         verb : 'get',
     }
-
     try{
         factory.create(configurations);
         expect(2).toBe(1)
