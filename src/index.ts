@@ -9,11 +9,13 @@ import { RenameFilesAction } from "./fileSystem/actions/RenameFilesAction"
 import { CallAnExecutableFireAndForgetFromFileSystem } from "./fileSystem/actions/CallAnExecutableFireAndForgetFromFileSystem"
 import { CallAnExecutableWaitingCompletionFromFileSystem } from "./fileSystem/actions/CallAnExecutableWaitingCompletionFromFileSystem"
 import { WebApiGetWaitingCompletion } from "./webCall/Actions/WebApiGetWaitingCompletion"
+import { WebApiPostWaitingCompletion } from "./webCall/Actions/WebApiPostWaitingCompletion"
 
 var sqllite    ='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 var executable ='C:/Repo/Scheduler_Typescript/src/fileSystem/TestExecutable/ReadPrameters/ReadParameter.exe'
 
-callRestAPI()
+callRestAPI_Post()
+//callRestAPI()
 //TestCallAnExecutableWaitingCompletion()
 //TestCallAnExecutableFireAndForget()
 //ReadConfigurationTest()
@@ -28,8 +30,20 @@ callRestAPI()
 
 console.log(100)
 
+
+
+ function callRestAPI_Post(){
+    var t=  JSON.stringify({
+        title: 'Pippus1',
+        body: 'More Body',
+        userId: 100,
+      })  
+    var caller = new WebApiPostWaitingCompletion('https://jsonplaceholder.typicode.com/posts', t)
+    caller.execute().then(x => console.log(`completed: ${JSON.stringify(x)}`)) 
+}
+
 function callRestAPI(){
-    var caller = new WebApiGetWaitingCompletion('https://jsonplaceholder.typicode.com/todos/1', null)
+    var caller = new WebApiGetWaitingCompletion('https://jsonplaceholder.typicode.com/todos/1')
     caller.execute().then(x => console.log(`completed: ${JSON.stringify(x)}`)) 
 }
 

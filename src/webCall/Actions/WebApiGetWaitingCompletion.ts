@@ -14,7 +14,7 @@ export class WebApiGetWaitingCompletion extends CallRemoteMethod{
     }
 
 
-    // //for reference https://www.npmjs.com/package/axios
+    // //for reference https://www.npmjs.com/package//axios
 //For testing https://jsonplaceholder.typicode.com/
 
 
