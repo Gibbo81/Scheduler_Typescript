@@ -3,8 +3,11 @@ import { CallRemoteMethod, RemoteCallResult } from '../../businessLogic/Actions/
 
 
 export class WebApiPostWaitingCompletion extends CallRemoteMethod{    
-    constructor(private route: string, private body: string) {
+    private readonly body : string
+
+    constructor(private route: string, body: object) {
         super()
+        this.body = JSON.stringify(body)
     }
         
     protected async callMethod(): Promise<RemoteCallResult> {      

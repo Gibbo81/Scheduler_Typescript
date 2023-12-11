@@ -38,7 +38,7 @@ console.log(100)
         body: 'More Body',
         userId: 100,
       })  
-    var caller = new WebApiPostWaitingCompletion('https://jsonplaceholder.typicode.com/posts', t)
+    var caller = new WebApiPostWaitingCompletion('https://jsonplaceholder.typicode.com/posts', {})
     caller.execute().then(x => console.log(`completed: ${JSON.stringify(x)}`)) 
 }
 

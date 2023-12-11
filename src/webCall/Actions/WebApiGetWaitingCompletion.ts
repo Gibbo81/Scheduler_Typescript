@@ -12,17 +12,4 @@ export class WebApiGetWaitingCompletion extends CallRemoteMethod{
         return (response.status===200)  ? RemoteCallResult.Success
                                         : RemoteCallResult.Failure
     }
-
-
-    // //for reference https://www.npmjs.com/package//axios
-//For testing https://jsonplaceholder.typicode.com/
-
-
-
-
-
-
-
-
-
 }

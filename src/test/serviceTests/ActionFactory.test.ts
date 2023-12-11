@@ -6,7 +6,45 @@ import { RenameFilesAction } from "../../fileSystem/actions/RenameFilesAction";
 import { CallAnExecutableFireAndForgetFromFileSystem } from "../../fileSystem/actions/CallAnExecutableFireAndForgetFromFileSystem";
 import { CallAnExecutableWaitingCompletionFromFileSystem } from "../../fileSystem/actions/CallAnExecutableWaitingCompletionFromFileSystem";
 import { WebApiGetWaitingCompletion } from "../../webCall/Actions/WebApiGetWaitingCompletion";
-import { WebApiGetWaitingFireAndForget } from "../../webCall/Actions/WebApiGetWaitingFireAndForget";
+import { WebApiGetFireAndForget } from "../../webCall/Actions/WebApiGetFireAndForget";
+import { WebApiPostFireAndForget } from "../../webCall/Actions/WebApiPostFireAndForget";
+import { WebApiPostWaitingCompletion } from "../../webCall/Actions/WebApiPostWaitingCompletion";
+
+test('Action factory creates "callremotemethod" action (Post - fire and forget), no error inside the configurations, it creates the right action', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callremotemethod',
+        verb : 'POST',
+        fireandforget: 'true',
+        route : 'https://jsonplaceholder.typicode.com/todos/4',
+        par1 : "abiy",
+        par2 : "Pippus",
+        lastone : "win win"
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(WebApiPostFireAndForget)
+  }
+)
+
+test('Action factory creates "callremotemethod" action (Post - waiting for cmpletition), no error inside the configurations, it creates the right action', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callremotemethod',
+        verb : 'POST',
+        fireandforget: 'false',
+        route : 'https://jsonplaceholder.typicode.com/todos/4',
+        par1 : "abiy",
+        par2 : "Pippus",
+        lastone : "win win"
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(WebApiPostWaitingCompletion)
+  }
+)
 
 test('Action factory creates "callremotemethod" action (GET - fire and forget), no error inside the configurations, it creates the right action', () =>{        
     var factory = new ActionFactory()
@@ -19,7 +57,7 @@ test('Action factory creates "callremotemethod" action (GET - fire and forget), 
 
     var result = factory.create(configurations);
 
-    expect(result).toBeInstanceOf(WebApiGetWaitingFireAndForget)
+    expect(result).toBeInstanceOf(WebApiGetFireAndForget)
   }
 )
 

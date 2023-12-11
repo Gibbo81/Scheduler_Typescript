@@ -6,10 +6,12 @@ import { MoveFilesActionWithFilter } from "../fileSystem/actions/MoveFileActionW
 import { MoveFilesActionWithoutFilter } from "../fileSystem/actions/MoveFilesActionWithoutFilter";
 import { RenameFilesAction } from "../fileSystem/actions/RenameFilesAction";
 import { WebApiGetWaitingCompletion } from "../webCall/Actions/WebApiGetWaitingCompletion";
-import { WebApiGetWaitingFireAndForget } from "../webCall/Actions/WebApiGetWaitingFireAndForget";
+import { WebApiGetFireAndForget } from "../webCall/Actions/WebApiGetFireAndForget";
+import { WebApiPostWaitingCompletion } from "../webCall/Actions/WebApiPostWaitingCompletion";
+import { WebApiPostFireAndForget } from "../webCall/Actions/WebApiPostFireAndForget";
 
 export class ActionFactory{
-    private readonly trueValue: string='true'
+    private readonly trueStringValue: string='true'
 
     public create(conf :{[key:string]:string}) : Action{
         this.checkName(conf);
@@ -31,7 +33,7 @@ export class ActionFactory{
     }
     private createCallRemoteMethodAction(conf: { [key: string]: string; }): Action {
         this.CheckParametersForCallRemoteMethodAction(conf);
-        if (conf.fireandforget === this.trueValue)
+        if (conf.fireandforget === this.trueStringValue)
             return this.createRemoteMethodFireAndForget(conf)        
         else
             return this.createRemoteMethodWaitingCompletion(conf)
@@ -42,6 +44,8 @@ export class ActionFactory{
         switch (conf.verb.toLowerCase()) {
             case "get":
                 return new WebApiGetWaitingCompletion(conf.route);
+            case "post":
+                return new WebApiPostWaitingCompletion(conf.route, this.prepareParametersForRemoteCallAction(conf));
         }
         throw new Error(`Unrecognized WebMethod verb: ${conf.verb}`);
     }
@@ -49,7 +53,9 @@ export class ActionFactory{
     private createRemoteMethodFireAndForget(conf: { [key: string]: string; }) {
         switch (conf.verb.toLowerCase()) {
             case "get":
-                return new WebApiGetWaitingFireAndForget(conf.route);
+                return new WebApiGetFireAndForget(conf.route);
+            case "post":
+                return new WebApiPostFireAndForget(conf.route, this.prepareParametersForRemoteCallAction(conf));
         }
         throw new Error(`Unrecognized WebMethod verb: ${conf.verb}`);
     }
@@ -74,7 +80,7 @@ export class ActionFactory{
     private createCallEexcutableAction(conf: { [key: string]: string; }): Action {
         this.CheckParametersForCallExecutableAction(conf);
         var parameter = this.prepareParametersForExeAction(conf);        
-        return (conf.fireandforget === this.trueValue) ?
+        return (conf.fireandforget === this.trueStringValue) ?
             new CallAnExecutableFireAndForgetFromFileSystem(conf.exepath, parameter) :
             new CallAnExecutableWaitingCompletionFromFileSystem(conf.exepath, parameter)
     }
@@ -86,7 +92,7 @@ export class ActionFactory{
             throw new Error("Action call remote method is missing the route.");
     }
 
-    private prepareParametersForExeAction(conf: { [key: string]: string; }) {
+    private prepareParametersForExeAction(conf: { [key: string]: string; }) :{ [key: string]: string; }{
         var parameter: { [key: string]: string; } = {};
         for (var key in conf)
             if (this.isAParameterForTheExecutable(key))
@@ -94,8 +100,20 @@ export class ActionFactory{
         return parameter;
     }
 
-    private isAParameterForTheExecutable(key: string) {
+    private isAParameterForTheExecutable(key: string) : boolean {
         return key !== 'exepath' && key !== 'fireandforget' && key !== 'name';
+    }
+
+    private prepareParametersForRemoteCallAction(conf: { [key: string]: string; }) :object{
+        var parameter: object = {};
+        for (var key in conf)
+            if (this.isAParameterForTheRemoteCall(key))
+                parameter[key] = conf[key];
+        return parameter;
+    }
+
+    private isAParameterForTheRemoteCall(key: string) : boolean {
+        return key !== 'route' && key !== 'verb' && key !== 'name' && key !== 'fireandforget';
     }
 
     private CheckParametersForCallExecutableAction(conf: { [key: string]: string; }) {
