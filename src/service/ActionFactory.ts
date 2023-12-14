@@ -9,6 +9,8 @@ import { WebApiGetWaitingCompletion } from "../webCall/Actions/WebApiGetWaitingC
 import { WebApiGetFireAndForget } from "../webCall/Actions/WebApiGetFireAndForget";
 import { WebApiPostWaitingCompletion } from "../webCall/Actions/WebApiPostWaitingCompletion";
 import { WebApiPostFireAndForget } from "../webCall/Actions/WebApiPostFireAndForget";
+import { WebApiDeleteWaitingCompletition } from "../webCall/Actions/WebApiDeleteWaitingCompletition";
+import { WebApiDeleteFireAndForget } from "../webCall/Actions/WebApiDeleteFireAndForget";
 
 export class ActionFactory{
     private readonly trueStringValue: string='true'
@@ -46,6 +48,8 @@ export class ActionFactory{
                 return new WebApiGetWaitingCompletion(conf.route);
             case "post":
                 return new WebApiPostWaitingCompletion(conf.route, this.prepareParametersForRemoteCallAction(conf));
+            case "delete":
+                return new WebApiDeleteWaitingCompletition(conf.route);
         }
         throw new Error(`Unrecognized WebMethod verb: ${conf.verb}`);
     }
@@ -56,6 +60,8 @@ export class ActionFactory{
                 return new WebApiGetFireAndForget(conf.route);
             case "post":
                 return new WebApiPostFireAndForget(conf.route, this.prepareParametersForRemoteCallAction(conf));
+            case "delete":
+                return new WebApiDeleteFireAndForget(conf.route);
         }
         throw new Error(`Unrecognized WebMethod verb: ${conf.verb}`);
     }

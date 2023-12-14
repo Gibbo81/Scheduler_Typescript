@@ -9,6 +9,38 @@ import { WebApiGetWaitingCompletion } from "../../webCall/Actions/WebApiGetWaiti
 import { WebApiGetFireAndForget } from "../../webCall/Actions/WebApiGetFireAndForget";
 import { WebApiPostFireAndForget } from "../../webCall/Actions/WebApiPostFireAndForget";
 import { WebApiPostWaitingCompletion } from "../../webCall/Actions/WebApiPostWaitingCompletion";
+import { WebApiDeleteFireAndForget } from "../../webCall/Actions/WebApiDeleteFireAndForget";
+import { WebApiDeleteWaitingCompletition } from "../../webCall/Actions/WebApiDeleteWaitingCompletition";
+
+test('Action factory creates "callremotemethod" action (delete - fire and forget), no error inside the configurations, it creates the right action', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callremotemethod',
+        verb : 'delete',
+        fireandforget: 'true',
+        route : 'https://jsonplaceholder.typicode.com/todos/4'
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(WebApiDeleteFireAndForget)
+  }
+)
+
+test('Action factory creates "callremotemethod" action (delete - waiting for cmpletition), no error inside the configurations, it creates the right action', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'callremotemethod',
+        verb : 'delete',
+        fireandforget: 'false',
+        route : 'https://jsonplaceholder.typicode.com/todos/4'
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(WebApiDeleteWaitingCompletition)
+  }
+)
 
 test('Action factory creates "callremotemethod" action (Post - fire and forget), no error inside the configurations, it creates the right action', () =>{        
     var factory = new ActionFactory()

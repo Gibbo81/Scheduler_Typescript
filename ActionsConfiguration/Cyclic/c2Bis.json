@@ -14,7 +14,9 @@
         "Par_A": "1",
         "Par_b": "1",
         "C": "cccc"
-    }
+    },
+    {"name":"callremotemethod", "verb":"delete", "fireandforget":"false", "route": "https://jsonplaceholder.typicode.com", "C": "cccc"},
+    {"name":"callremotemethod", "verb":"delete", "fireandforget":"true", "route": "https://jsonplaceholder.typicode.com", "Par_b": "cccc"}
   ],
   "Parallel": true
 }
