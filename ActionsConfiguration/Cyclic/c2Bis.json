@@ -4,7 +4,17 @@
   "Actions" :[
     {"name":"deletefiles", "folder":"C:/pppp/", "subNamePart":"pip"},
     {"name":"callexe", "exepath":"C:/pppp/o.exe", "fireandforget":"true", "pippus":"plutus"},
-    {"name":"callexe", "exepath":"C:/pppp/o.exe", "fireandforget":"false"}
+    {"name":"callexe", "exepath":"C:/pppp/o.exe", "fireandforget":"false"},
+    {"name":"callremotemethod", "verb":"Get", "fireandforget":"false", "route": "https://jsonplaceholder.typicode.com"},
+    {
+        "name":"callremotemethod", 
+        "verb":"POSt", 
+        "fireandforget":"true", 
+        "route": "https://jsonplaceholder.typicode.com/posts" ,
+        "Par_A": "1",
+        "Par_b": "1",
+        "C": "cccc"
+    }
   ],
   "Parallel": true
 }

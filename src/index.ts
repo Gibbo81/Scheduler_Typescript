@@ -14,11 +14,11 @@ import { WebApiPostWaitingCompletion } from "./webCall/Actions/WebApiPostWaiting
 var sqllite    ='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 var executable ='C:/Repo/Scheduler_Typescript/src/fileSystem/TestExecutable/ReadPrameters/ReadParameter.exe'
 
-callRestAPI_Post()
+//callRestAPI_Post()
 //callRestAPI()
 //TestCallAnExecutableWaitingCompletion()
 //TestCallAnExecutableFireAndForget()
-//ReadConfigurationTest()
+ReadConfigurationTest()
 //insertNewCyclicOperation('123Star', new Date(), 113)
 //completeCyclicOperation('123Star', new Date())
 //StartPluto()

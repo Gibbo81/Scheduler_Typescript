@@ -29,7 +29,7 @@ export class ActionFactory{
         }
         
 
-        throw new Error("Unrecognized Action.");
+        throw new Error(`Unrecognized Action: ${conf.name}`);
     }
     private createCallRemoteMethodAction(conf: { [key: string]: string; }): Action {
         this.CheckParametersForCallRemoteMethodAction(conf);

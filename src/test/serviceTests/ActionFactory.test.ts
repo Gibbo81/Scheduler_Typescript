@@ -396,7 +396,7 @@ test("Action factory does not recognize the zction type, it throws an error", ()
         expect(2).toBe(1)
     }
     catch(e){
-        expect(e.message).toBe('Unrecognized Action.')
+        expect(e.message).toBe('Unrecognized Action: PIPPO PLUTO 124')
         expect(e).toBeInstanceOf(Error)
     }
 })
