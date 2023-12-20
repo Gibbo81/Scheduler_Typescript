@@ -4,11 +4,7 @@ Main argument:
   
   
 Workinh on:  
---	Action call a web API. created base abstract class CallRemoteMethod --> working on first concrete implementation class WebApiGet f&F/wait (cretaed factory) ready for next action
-	*** working on post verb only create sync (Done)
-	*** working on delete route
-	
-	*** After all the actions do the manual test loading them from the configuration files
+-- Fix all the action, error management is missing
 
 -- Factory and factory tests -> To do when creating new actions (move files - delete files - rename files - call exe)
 
@@ -24,3 +20,5 @@ DONE:
 	--rename all files action 	DONE
 	--delete all files action 	DONE		
 	--CallAnExecutable action   DONE
+	--WebAPI call 				DONE
+	--Execute script SQLite		missing factory

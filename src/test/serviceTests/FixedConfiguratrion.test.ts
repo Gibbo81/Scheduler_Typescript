@@ -1,4 +1,3 @@
-import exp from "constants";
 import { FixedConfiguratrion } from "../../service/dto/FixedConfiguratrion";
 
 test('Fixed Configuration is correctly deserialized', () =>{

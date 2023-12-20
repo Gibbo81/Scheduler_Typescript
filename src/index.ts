@@ -10,15 +10,25 @@ import { CallAnExecutableFireAndForgetFromFileSystem } from "./fileSystem/action
 import { CallAnExecutableWaitingCompletionFromFileSystem } from "./fileSystem/actions/CallAnExecutableWaitingCompletionFromFileSystem"
 import { WebApiGetWaitingCompletion } from "./webCall/Actions/WebApiGetWaitingCompletion"
 import { WebApiPostWaitingCompletion } from "./webCall/Actions/WebApiPostWaitingCompletion"
+import { ExecuteScript } from "./SqlLite/Action/ExecuteScript"
 
 var sqllite    ='C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
 var executable ='C:/Repo/Scheduler_Typescript/src/fileSystem/TestExecutable/ReadPrameters/ReadParameter.exe'
+var insertScript : string = 
+`INSERT INTO OperationLastExecution(
+	Name,
+	InExecution,
+	ExecutionStarted,
+	SchedulerInCharge)
+VALUES ('FromScript', 1, '${new Date().toString()}', 159)` 
 
+
+ExecuteScriptActionTest()
 //callRestAPI_Post()
 //callRestAPI()
 //TestCallAnExecutableWaitingCompletion()
 //TestCallAnExecutableFireAndForget()
-ReadConfigurationTest()
+//ReadConfigurationTest()
 //insertNewCyclicOperation('123Star', new Date(), 113)
 //completeCyclicOperation('123Star', new Date())
 //StartPluto()
@@ -61,6 +71,13 @@ function TestCallAnExecutableWaitingCompletion(){
 function StartPluto() {
     var y = new CheckCyclicOperation(sqllite, 1)
     y.start("pluto non c'è", new Date(), 234).then(x => console.log(`started: ${x}`))
+}
+
+function ExecuteScriptActionTest() {
+    var y = new ExecuteScript(sqllite, insertScript)
+    y.execute().then(x => 
+        console.log(`completed: ${JSON.stringify(x)}`)
+        )
 }
 
 function insertNewCyclicOperation(operationName: string, date: Date, schedulerId: number) {
