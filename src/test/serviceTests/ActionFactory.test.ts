@@ -11,6 +11,57 @@ import { WebApiPostFireAndForget } from "../../webCall/Actions/WebApiPostFireAnd
 import { WebApiPostWaitingCompletion } from "../../webCall/Actions/WebApiPostWaitingCompletion";
 import { WebApiDeleteFireAndForget } from "../../webCall/Actions/WebApiDeleteFireAndForget";
 import { WebApiDeleteWaitingCompletition } from "../../webCall/Actions/WebApiDeleteWaitingCompletition";
+import { ExecuteScript } from "../../SqlLite/Action/ExecuteScript";
+
+test("Action factory creates 'executesqlightscript' action but the script sequel is missing, it throws an error", () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'executesqlightscriPT',
+        db: 'C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
+    }
+
+    try{
+        factory.create(configurations);
+        expect(2).toBe(1)
+    }
+    catch(e){
+        expect(e.message).toBe("Action executesqlightscript is missing the script command.")
+        expect(e).toBeInstanceOf(Error)
+    }
+  }
+)
+
+test("Action factory creates 'executesqlightscript' action but the db is missing, it throws an error", () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'executesqlightscriPT',
+        script : 'insert into ....' 
+    }
+
+    try{
+        factory.create(configurations);
+        expect(2).toBe(1)
+    }
+    catch(e){
+        expect(e.message).toBe("Action executesqlightscript is missing the DB.")
+        expect(e).toBeInstanceOf(Error)
+    }
+  }
+)
+
+test('Action factory creates "executesqlightscript" action, no error inside the configurations, it creates the right action', () =>{        
+    var factory = new ActionFactory()
+    var configurations = { 
+        name : 'executesqlightscriPT',
+        script : 'insert into ....',
+        db: 'C:/Repo/Scheduler_Typescript/src/SqlLite/Test_DB/Scheduler.db'
+    }
+
+    var result = factory.create(configurations);
+
+    expect(result).toBeInstanceOf(ExecuteScript)
+  }
+)
 
 test('Action factory creates "callremotemethod" action (delete - fire and forget), no error inside the configurations, it creates the right action', () =>{        
     var factory = new ActionFactory()

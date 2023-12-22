@@ -11,6 +11,7 @@ import { WebApiPostWaitingCompletion } from "../webCall/Actions/WebApiPostWaitin
 import { WebApiPostFireAndForget } from "../webCall/Actions/WebApiPostFireAndForget";
 import { WebApiDeleteWaitingCompletition } from "../webCall/Actions/WebApiDeleteWaitingCompletition";
 import { WebApiDeleteFireAndForget } from "../webCall/Actions/WebApiDeleteFireAndForget";
+import { ExecuteScript } from "../SqlLite/Action/ExecuteScript";
 
 export class ActionFactory{
     private readonly trueStringValue: string='true'
@@ -28,11 +29,17 @@ export class ActionFactory{
                 return this.createCallEexcutableAction(conf)
             case "callremotemethod":
                 return this.createCallRemoteMethodAction(conf)
+            case "executesqlightscript":
+                return this.createExecuteScriptAction(conf)
         }
-        
-
         throw new Error(`Unrecognized Action: ${conf.name}`);
     }
+
+    private createExecuteScriptAction(conf: { [key: string]: string; }): Action {
+        this.CheckParametersForExecuteSQLightAction(conf);
+        return new ExecuteScript(conf.db, conf.script)
+    }
+
     private createCallRemoteMethodAction(conf: { [key: string]: string; }): Action {
         this.CheckParametersForCallRemoteMethodAction(conf);
         if (conf.fireandforget === this.trueStringValue)
@@ -96,6 +103,13 @@ export class ActionFactory{
             throw new Error("Action call remote method is missing the verb.");
         if (!conf.route)
             throw new Error("Action call remote method is missing the route.");
+    }
+
+    private CheckParametersForExecuteSQLightAction(conf: { [key: string]: string; }) {
+        if (!conf.script)
+            throw new Error("Action executesqlightscript is missing the script command.");
+        if (!conf.db)
+            throw new Error("Action executesqlightscript is missing the DB.");
     }
 
     private prepareParametersForExeAction(conf: { [key: string]: string; }) :{ [key: string]: string; }{

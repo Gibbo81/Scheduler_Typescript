@@ -13,7 +13,7 @@ Workinh on:
 --  fixed operation
 --  file system operations recursive behaviour
 --  fix all actions to cath the exception and return a classic error
-
+-- Update factory: check for missing configuration should returns an array of errors not a single one
 
 DONE:
 	--move all files action 	DONE
