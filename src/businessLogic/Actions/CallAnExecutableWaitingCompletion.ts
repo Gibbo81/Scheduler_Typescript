@@ -9,6 +9,15 @@ export abstract class CallAnExecutableWaitingCompletion extends CallAnExecutable
     }
 
     async execute(): Promise<{ [key: string]: string; }> {
+        try{
+            return await this.tryExecute();   
+        }
+        catch(e) {
+            return{ 'Name': 'CallAnExecutable', 'Status': 'Failure' }   
+        }
+    }
+
+    async tryExecute(): Promise<{ [key: string]: string; }> {
         await this.lunchAndWait()
         return { 'Name': 'CallAnExecutable', 'Status': 'Completed' }
     }

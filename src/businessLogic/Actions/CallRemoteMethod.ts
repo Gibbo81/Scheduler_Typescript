@@ -23,5 +23,3 @@ export abstract class CallRemoteMethod implements Action{
                                                         : { 'Name': 'CallRemoteMethod', 'Status': 'Failure' };
     }
 }
-    // //for reference https://www.npmjs.com/package//axios
-//For testing https://jsonplaceholder.typicode.com/

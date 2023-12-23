@@ -9,7 +9,16 @@ export abstract class CallAnExecutableFireAndForget extends CallAnExecutableBase
     }
 
     execute(): Promise<{ [key: string]: string; }> {
+        try{
+            return this.tryExecute();   
+        }
+        catch(e) {
+            return new Promise((resolve, reject) => {resolve({ 'Name': 'CallAnExecutable', 'Status': 'Failure' })})   
+        }
+    }
+
+    private tryExecute() : Promise<{ [key: string]: string; }> {
         this.lunch();
-        return new Promise((resolve, reject) => {resolve({ 'Name': 'CallAnExecutable', 'Status': 'Completed' })})   
+        return new Promise((resolve, reject) => { resolve({ 'Name': 'CallAnExecutable', 'Status': 'Completed' }); });
     }
 }

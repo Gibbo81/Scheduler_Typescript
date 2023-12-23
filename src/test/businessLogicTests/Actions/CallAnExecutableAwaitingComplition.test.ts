@@ -22,15 +22,11 @@ test('Creates the action with two couple, the execution takes four parameters', 
 test('The action goes in error, the code does not catch the excetion', async () =>{        
     var action = new CallAnExecutableWaitingCompletionWrapperError('', {})
 
-    try{
-        await action.execute()
-        expect(2).toBe(1)
+    var result = await action.execute()
+
+    expect(result.Status).toBe('Failure')
+    expect(result.Name).toBe('CallAnExecutable')
     }
-    catch(e){
-        expect(e.message).toBe(':-(')
-        expect(e).toBeInstanceOf(Error)
-    }
-  }
 )
 
 class CallAnExecutableWaitingCompletionWrapper extends CallAnExecutableWaitingCompletion{

@@ -43,6 +43,16 @@ test('No entities are present, the action does nothing', async () =>{
   }
 )
 
+test('Error during execution, the action returns failed status', async () =>{        
+    var action = new RenameActionsWithFilterBrokenMock("pippo", 'pluto')
+    
+    var result = await action.execute()
+
+    expect(result.Status).toBe('Failure')
+    expect(result.Name).toBe('RenameActions')
+  }
+)
+
 class RenameActionsWithFilterMock extends RenameActions{
     public RenamedOld : string[] = []
     public RenamedNew : string[] = []
@@ -59,5 +69,14 @@ class RenameActionsWithFilterMock extends RenameActions{
 
     protected override async readAllEntities(): Promise<string[]> {
         return Promise.resolve(this.entitiesPresent)
+    }    
+}
+
+class RenameActionsWithFilterBrokenMock extends RenameActions{
+    protected readAllEntities(): Promise<string[]> {
+        throw new Error("Method not implemented.")
+    }
+    protected renameEntity(oldName: string, newName: string): Promise<void> {
+        throw new Error("Method not implemented.")
     }    
 }

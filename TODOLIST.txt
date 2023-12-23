@@ -4,7 +4,7 @@ Main argument:
   
   
 Workinh on:  
--- Fix all the action, error management is missing
+-- What an operetion does in case of error during an action's execution? stop / continue? FROM CONFIGURATION
 
 -- Factory and factory tests -> To do when creating new actions (move files - delete files - rename files - call exe)
 

@@ -26,6 +26,17 @@ test('Two entities are present therefore the actions moves both', async () =>{
   }
 )
 
+test('Error during execution, the action returns a failed status', async () =>{        
+    var action = new MoveEntitiesActionWithoutFilterBrokenMock()
+    
+    var result = await action.execute()
+
+    expect(result.Status).toBe('Failure')
+    expect(result.Name).toBe('MoveEntitiesActionWithoutFilter')
+  }
+)
+
+
 class MoveEntitiesActionWithoutFilterMock extends MoveActionWithoutFilter{
     public Moved : string[] = []
 
@@ -39,4 +50,14 @@ class MoveEntitiesActionWithoutFilterMock extends MoveActionWithoutFilter{
         for (var f of entities)
             this.Moved.push(f)
     }
+}
+
+class MoveEntitiesActionWithoutFilterBrokenMock extends MoveActionWithoutFilter{
+    protected readAllEntities(): Promise<string[]> {
+        throw new Error("Method not implemented.")
+    }
+    protected moveEntities(entities: string[]): Promise<void> {
+        throw new Error("Method not implemented.")
+    }
+    
 }

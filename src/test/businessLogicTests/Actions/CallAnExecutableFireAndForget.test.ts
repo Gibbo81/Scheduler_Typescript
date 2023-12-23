@@ -21,17 +21,14 @@ test('Creates the action with two couple, the execution takes four parameters', 
   }
 )
 
-test('The action goes in error, the code does not catch the excetion', async () =>{        
+test('The action goes in error, the code returns a failure status', async () =>{        
     var action = new CallAnExecutableFireAndForgetWrapperError('', {})
 
-    try{
-        await action.execute()
-        expect(2).toBe(1)
-    }
-    catch(e){
-        expect(e.message).toBe(':-(')
-        expect(e).toBeInstanceOf(Error)
-    }
+
+    var result = await action.execute()
+
+    expect(result.Status).toBe('Failure')
+    expect(result.Name).toBe('CallAnExecutable')
   }
 )
 

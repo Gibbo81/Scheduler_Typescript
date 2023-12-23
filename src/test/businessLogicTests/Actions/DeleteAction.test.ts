@@ -61,6 +61,17 @@ test('Four entities are present but only two matche the filter, two are deleted'
   }
 )
 
+test('Error reading the files, the action returns a fail status', async () =>{        
+    var filter ='aa'
+    var action = new DeleteBrokenActionWrapper(filter)
+    
+    var result = await action.execute()
+
+    expect(result.Status).toBe('Failure')
+    expect(result.Name).toBe('DeleteAction')
+  }
+)
+
 class DeleteActionWrapper extends DeleteAction{
     public Deleted : string[] = []
     constructor(subName:string, private entitiesPresent :string[]){ super(subName) }
@@ -72,5 +83,14 @@ class DeleteActionWrapper extends DeleteAction{
     protected override async deleteEntity(f: string): Promise<undefined> {
         this.Deleted.push(f)
         return Promise.resolve(undefined)
+    }
+}
+
+class DeleteBrokenActionWrapper extends DeleteAction{
+    protected readAllEntities(): Promise<string[]> {
+        throw new Error("Method not implemented.")
+    }
+    protected deleteEntity(f: string): Promise<undefined> {
+        throw new Error("Method not implemented.")
     }
 }

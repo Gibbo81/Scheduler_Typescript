@@ -1,6 +1,5 @@
 import { CallAnExecutableFireAndForget } from "../../businessLogic/Actions/CallAnExecutableFireAndForget";
 
-
 export class CallAnExecutableFireAndForgetFromFileSystem extends CallAnExecutableFireAndForget{
     constructor(executablePath: string, parameters: { [key: string]: string }){
         super(executablePath, parameters)

@@ -51,6 +51,16 @@ test('Two entities are present, one match the filter,  therefore the actions mov
   }
 )
 
+test('Error reading, the action returns an error result', async () =>{        
+    var action = new MoveEntitiesActionWithFilterBrokenMock("pippo")
+    
+    var result = await action.execute()
+
+    expect(result.Status).toBe('Failure')
+    expect(result.Name).toBe('MoveEntitiesAction')
+  }
+)
+
 class MoveEntitiesActionWithFilterMock extends MoveActionWithFilter{
     public Moved : string[] = []
 
@@ -67,4 +77,14 @@ class MoveEntitiesActionWithFilterMock extends MoveActionWithFilter{
         for (var f of entities)
             this.Moved.push(f)
     }
+}
+
+class MoveEntitiesActionWithFilterBrokenMock extends MoveActionWithFilter{
+    protected readAllEntities(): Promise<string[]> {
+        throw new Error("Method not implemented.")
+    }
+    protected moveEntities(entities: string[]): Promise<void> {
+        throw new Error("Method not implemented.")
+    }
+    
 }
