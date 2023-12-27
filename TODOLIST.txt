@@ -5,8 +5,9 @@ Main argument:
   
 Workinh on:  
 -- What an operetion does in case of error during an action's execution? stop / continue? FROM CONFIGURATION
+		Missing factory and unit tests
 
--- Factory and factory tests -> To do when creating new actions (move files - delete files - rename files - call exe)
+
 
 
 //FUTURE
@@ -21,4 +22,4 @@ DONE:
 	--delete all files action 	DONE		
 	--CallAnExecutable action   DONE
 	--WebAPI call 				DONE
-	--Execute script SQLite		missing factory
+	--Execute script SQLite		DONE

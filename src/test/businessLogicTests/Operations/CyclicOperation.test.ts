@@ -1,9 +1,10 @@
-import { CyclicOperation } from "../../../businessLogic/Operations/CyclicOperation";
+import { CyclicOperationBase } from "../../../businessLogic/Operations/CyclicOperation";
 import { OperationStatus } from "../../../businessLogic/plugIn/OperationStatus";
 import { IsToExecute } from "../../../businessLogic/IsToExecute";
 import { Action } from "../../../businessLogic/Actions/Action";
+import { CyclicOperationOnErrorGoOn } from "../../../businessLogic/Operations/CyclicOperationOnErrorGoOn";
 
-
+//TODO: updates unit tests to new classis
 test('Must execute the operation, executes its actions and returns true', async ()=> {
     var status = new IsToExecuteMock(true, true)
     var statusReaderMock = new OperationStatusMock(status)    
@@ -12,7 +13,7 @@ test('Must execute the operation, executes its actions and returns true', async 
     actions.push(new ActionMock())
     var cycliTime =10
     var operationName ="Pippus"
-    var operation = new CyclicOperation(cycliTime, operationName, 777, statusReaderMock, actions)
+    var operation = new CyclicOperationOnErrorGoOn(cycliTime, operationName, statusReaderMock, actions)
 
     var result = await operation.CheckAndExecute();
 
@@ -34,7 +35,7 @@ test("Must execute the operation but another instance takes charge of it instead
     actions.push(new ActionMock())
     var cycliTime =10
     var operationName ="Pippus"
-    var operation = new CyclicOperation(cycliTime, operationName, 777, statusReaderMock, actions)
+    var operation = new CyclicOperationOnErrorGoOn(cycliTime, operationName, statusReaderMock, actions)
 
     var result = await operation.CheckAndExecute();
 
@@ -55,7 +56,7 @@ test('Must NOT execute the operation, does not executes it actions and returns f
     actions.push(new ActionMock())
     var cycliTime =10
     var operationName ="Pippus"
-    var operation = new CyclicOperation(cycliTime, operationName, 777, statusReaderMock, actions)
+    var operation = new CyclicOperationOnErrorGoOn(cycliTime, operationName, statusReaderMock, actions)
 
     var result = await operation.CheckAndExecute();
 

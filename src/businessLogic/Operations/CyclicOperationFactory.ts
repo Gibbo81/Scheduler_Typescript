@@ -1,17 +1,17 @@
 import { CheckCyclicOperation } from "../../SqlLite/CheckCyclicOperation";
 import { CyclingConfiguratrion } from "../../service/dto/CyclingConfiguratrion";
 import { ActionFactory } from "../../service/ActionFactory";
-import { CyclicOperation } from "./CyclicOperation";
+import { CyclicOperationBase } from "./CyclicOperation";
+import { CyclicOperationOnErrorGoOn } from "./CyclicOperationOnErrorGoOn";
 
 
 export class CyclicOperationFactory {
     constructor(private dbConnectionString: string, private schedureId: number, private actionFactory: ActionFactory) { }
 
-    build(configuration: CyclingConfiguratrion): CyclicOperation {
+    build(configuration: CyclingConfiguratrion): CyclicOperationBase {
         this.CheckConfiguration(configuration);
-        return new CyclicOperation(configuration.CyclingTime, 
+        return new CyclicOperationOnErrorGoOn(configuration.CyclingTime, //TODO: add multiple fatory options
                                    configuration.OperationName,
-                                   this.schedureId,
                                    new CheckCyclicOperation(this.dbConnectionString, this.schedureId), 
                                    configuration.Actions.map(a => this.actionFactory.create(a))); 
     }

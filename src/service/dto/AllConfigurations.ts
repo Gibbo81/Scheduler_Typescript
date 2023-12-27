@@ -1,6 +1,6 @@
-import { CyclicOperation } from "../../businessLogic/Operations/CyclicOperation";
+import { CyclicOperationBase } from "../../businessLogic/Operations/CyclicOperation";
 import { FixedConfiguratrion } from "./FixedConfiguratrion";
 
 export class AllConfiguration{
-  constructor(public cyclic : CyclicOperation[], public fixed : FixedConfiguratrion[] ){}
+  constructor(public cyclic : CyclicOperationBase[], public fixed : FixedConfiguratrion[] ){}
 }

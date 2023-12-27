@@ -3,31 +3,47 @@ import { OperationStatus } from "../plugIn/OperationStatus";
 import { IOperation } from "./IOperation";
 import { IsToExecute } from "../IsToExecute";
 
-export class CyclicOperation implements IOperation{
+export abstract class CyclicOperationBase implements IOperation{
+    private readonly executed = true;
+    private readonly notExeceuted = false;
+    protected readonly noError : number = 0;
+    protected readonly error : number = 1;
+    protected readonly success : string = 'Completed';
+
     constructor(private cyclicTime : number,  
                 private name : string,
-                private ownerId: number,
                 private status: OperationStatus, 
-                private actions: Action[]){}
+                protected actions: Action[]){}
     
+    protected abstract executeActions(): Promise<number>
+
     async CheckAndExecute(): Promise<boolean> {        
         var currentStatus = await this.status.read(this.name);               
         if (currentStatus.check(this.cyclicTime))
-            return await this.ExecuteActions(currentStatus)
+            return await this.executeOperation(currentStatus)
         return false
     }
 
-    private async ExecuteActions(currentStatus: IsToExecute) : Promise<boolean>{
+    private async executeOperation(currentStatus: IsToExecute) : Promise<boolean>{
         var isTakenInChargeByThisInstance = await currentStatus.start()
         if (!isTakenInChargeByThisInstance)
-            return false;
+            return this.notExeceuted;
         await this.executeActions();
         await currentStatus.complete()
-        return true;
+        return this.executed;
     }
 
-    private async executeActions() {
-        for (const x of this.actions)
-            await x.execute();
+    protected async tryExecuteActions(x: Action): Promise<number> {
+        try {
+            return await this.checkResult(x);
+        }
+        catch{
+            return this.error
+        }
+    }
+
+    private async checkResult(x: Action) {
+        var result = await x.execute();
+        return result.Status === this.success ? this.noError : this.error;
     }
 }

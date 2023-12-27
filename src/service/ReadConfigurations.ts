@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import { AllConfiguration } from "./dto/AllConfigurations";
 import { FixedConfiguratrion } from "./dto/FixedConfiguratrion";
 import { CyclingConfiguratrion } from "./dto/CyclingConfiguratrion";
-import { CyclicOperation } from "../businessLogic/Operations/CyclicOperation";
+import { CyclicOperationBase } from "../businessLogic/Operations/CyclicOperation";
 import { CyclicOperationFactory } from "../businessLogic/Operations/CyclicOperationFactory";
 
 export class ReadConfiguration{
@@ -14,15 +14,15 @@ export class ReadConfiguration{
         return new AllConfiguration(cyclicDtos, fixedDtos) 
     }
 
-    private async readCyclics() : Promise<CyclicOperation[]> {
+    private async readCyclics() : Promise<CyclicOperationBase[]> {
         var cyclicConfigurationsfiles = await this.searchJsonFiles(this.cycleFolder);
-        var cyclicDtos: CyclicOperation[] = [];
+        var cyclicDtos: CyclicOperationBase[] = [];
         for (const file of cyclicConfigurationsfiles) 
             await this.readSinglecyclicConfiguration(file, cyclicDtos);
         return cyclicDtos;
     }
 
-    private async readSinglecyclicConfiguration(file: string, cyclicDtos: CyclicOperation[]) {
+    private async readSinglecyclicConfiguration(file: string, cyclicDtos: CyclicOperationBase[]) {
         var content = await fs.readFile(file, 'utf8');
         var dto = JSON.parse(content) as CyclingConfiguratrion;
         cyclicDtos.push(this.factoryC.build(dto));
