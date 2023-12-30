@@ -18,5 +18,6 @@
     {"name":"callremotemethod", "verb":"delete", "fireandforget":"false", "route": "https://jsonplaceholder.typicode.com", "C": "cccc"},
     {"name":"callremotemethod", "verb":"delete", "fireandforget":"true", "route": "https://jsonplaceholder.typicode.com", "Par_b": "cccc"}
   ],
-  "Parallel": true
+  "Parallel": true,
+  "OnErrorGoOn": true
 }

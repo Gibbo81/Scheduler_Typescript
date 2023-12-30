@@ -8,5 +8,6 @@
     {"name":"mOVEfiles", "folder":"C:/pppp/high/", "destinationFolder": "C:/pppp/high/uiu/"},
     {"name":"mOVEfiles", "folder":"C:/pppp/high/", "destinationFolder": "C:/pppp/high/uiu/", "subNamePart": "sub"}
   ],
-  "Parallel": false
+  "Parallel": false,
+  "OnErrorGoOn": false
 }

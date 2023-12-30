@@ -1,13 +1,43 @@
 import { ActionFactory } from "../../../service/ActionFactory";
 import { CyclicOperationFactory } from "../../../businessLogic/Operations/CyclicOperationFactory";
 import { CyclingConfiguratrion } from "../../../service/dto/CyclingConfiguratrion";
+import { CyclicOperationOnErrorGoOn } from "../../../businessLogic/Operations/CyclicOperationOnErrorGoOn";
+import { CyclicOperationOnErrorStop } from "../../../businessLogic/Operations/CyclicOperationOnErrorStop";
+
+test("CyclicOperationFactory elaborates a valid configuration with 'OnErrorGoOn' TRUE, returns the correct object", () =>{        
+    var factory = new CyclicOperationFactory('con', 100, new ActionFactory())
+    var configuration = new CyclingConfiguratrion()
+    configuration.OnErrorGoOn = true
+    configuration.OperationName = 'Pippus'
+    configuration.CyclingTime = 78
+    configuration.Parallel = false
+    configuration.Actions= [ {name:"deletefiles", folder:"C:/pppp/low", subNamePart:"oi"}]
+
+    var result =factory.build(configuration);
+
+    expect(result).toBeInstanceOf(CyclicOperationOnErrorGoOn)
+})
+
+test("CyclicOperationFactory elaborates a valid configuration with 'OnErrorGoOn' FALSE, returns the correct object", () =>{        
+    var factory = new CyclicOperationFactory('con', 100, new ActionFactory())
+    var configuration = new CyclingConfiguratrion()
+    configuration.OnErrorGoOn = false
+    configuration.OperationName = 'Pippus'
+    configuration.CyclingTime = 78
+    configuration.Parallel = false
+    configuration.Actions= [ {name:"deletefiles", folder:"C:/pppp/low", subNamePart:"oi"}]
+
+    var result =factory.build(configuration);
+
+    expect(result).toBeInstanceOf(CyclicOperationOnErrorStop)
+})
 
 test("CyclicOperationFactory elaborates a configuration but operation name is missing; returns an error", () =>{        
     var factory = new CyclicOperationFactory('con', 100, new ActionFactory())
     var configuration = new CyclingConfiguratrion()
     configuration.CyclingTime = 78
     configuration.Parallel = false
-    configuration.Actions= [ {name:"deletefile", folder:"C:/pppp/low", subNamePart:"oi"}]
+    configuration.Actions= [ {name:"deletefiles", folder:"C:/pppp/low", subNamePart:"oi"}]
 
     try{
         factory.build(configuration);
@@ -24,7 +54,7 @@ test("CyclicOperationFactory elaborates a configuration but cyclic time is missi
     var configuration = new CyclingConfiguratrion()
     configuration.OperationName = 'opo'
     configuration.Parallel = false
-    configuration.Actions= [ {name:"deletefile", folder:"C:/pppp/low", subNamePart:"oi"}]
+    configuration.Actions= [ {name:"deletefiles", folder:"C:/pppp/low", subNamePart:"oi"}]
 
     try{
         factory.build(configuration);

@@ -23,12 +23,12 @@ var insertScript : string =
 VALUES ('FromScript', 1, '${new Date().toString()}', 159)` 
 
 
-ExecuteScriptActionTest()
+//ExecuteScriptActionTest()
 //callRestAPI_Post()
 //callRestAPI()
 //TestCallAnExecutableWaitingCompletion()
 //TestCallAnExecutableFireAndForget()
-//ReadConfigurationTest()
+ReadConfigurationTest()
 //insertNewCyclicOperation('123Star', new Date(), 113)
 //completeCyclicOperation('123Star', new Date())
 //StartPluto()
